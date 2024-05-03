@@ -19,4 +19,13 @@ class Disciplinas extends Model
         'tipo',
         'modalidade'       
     ];
+
+    public function grades()
+    {
+        return $this->belongsToMany(Grades::class, 'disciplinas_grades');
+    }
+
+    public function equivalencias(){
+        return $this->belongsToMany(Equivalencias::class, 'disciplinas_equivalencias');
+    }
 }

@@ -14,4 +14,8 @@ class Grades extends Model
     protected $fillable = [
         'titulo'
     ];
+
+    public function disciplinas(){
+        return $this->belongsToMany(Disciplinas::class, 'disciplinas_grades');
+    }
 }
