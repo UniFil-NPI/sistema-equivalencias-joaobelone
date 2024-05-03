@@ -32,9 +32,18 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
-                            </div>
-                        </div>
 
+                                <NavLink :href="route('disciplinas.index')" :active="route().current('disciplinas.index')">
+                                    Disciplinas
+                                </NavLink>
+
+                                <NavLink :href="route('grades.index')" :active="route().current('grades.index')">
+                                    Grades
+                                </NavLink>
+
+                            </div>
+
+                        </div>
                         <div class="hidden sm:flex sm:items-center sm:ms-6">
                             <!-- Settings Dropdown -->
                             <div class="ms-3 relative">
@@ -114,6 +123,14 @@ const showingNavigationDropdown = ref(false);
                     <div class="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
+                        </ResponsiveNavLink>
+
+                        <ResponsiveNavLink :href="route('disciplinas.index')" :active="route().current('disciplinas.index')">
+                            Disciplinas
+                        </ResponsiveNavLink>
+
+                        <ResponsiveNavLink :href="route('grades.index')" :active="route().current('grades.index')">
+                            Grades
                         </ResponsiveNavLink>
                     </div>
 
