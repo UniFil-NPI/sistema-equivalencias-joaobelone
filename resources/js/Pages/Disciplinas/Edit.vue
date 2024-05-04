@@ -14,10 +14,10 @@ const page = usePage();
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Criar Disciplina</h2>
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Editar Disciplina</h2>
         </template>
 
-        <DisciplinasForm :grades="$page.props.grades" :csrf_token="page.props.csrf_token" />
+        <DisciplinasForm :disciplina="$page.props.disciplina" :grades="$page.props.grades" :csrf_token="page.props.csrf_token" />
         
     </AuthenticatedLayout>
 </template>
