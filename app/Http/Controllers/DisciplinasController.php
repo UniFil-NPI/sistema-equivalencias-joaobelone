@@ -6,6 +6,9 @@ use App\Models\Disciplinas;
 use App\Models\Grades;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Http\Requests\DisciplinasRequest;
+use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class DisciplinasController extends Controller
 {
@@ -25,9 +28,19 @@ class DisciplinasController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(DisciplinasRequest $request)
     {
-       dd('WIP');
+        try {
+            DB::beginTransaction();
+
+            Disciplinas::create($request->validated());
+
+            DB::commit();
+            return to_route('disciplinas.create');
+        } catch (Throwable $th) {
+            DB::rollBack();
+            return redirect()->back()->withInput()->withErrors('Erro ao adicionar aula!');
+        }
     }
 
     public function show(string $id)

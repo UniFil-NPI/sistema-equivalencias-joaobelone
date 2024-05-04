@@ -43,7 +43,7 @@ export default {
                             <label for="carga_horaria"
                                 class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Carga
                                 horaria:</label>
-                            <input type="text" name="carga_horaria" id="carga_horaria"
+                            <input type="number" min="0" name="carga_horaria" id="carga_horaria"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600"
                                 placeholder="Insira a carga horária">
                         </div>
@@ -67,10 +67,12 @@ export default {
                         </div>
                         <div class="col-span-6 sm:col-span-4">
                             <label for="Grades"
-                                class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Grades:</label>   
+                                class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Grades:</label>
 
-                                <multiselect v-model="value" tag-placeholder="Add this as new tag" placeholder="Search or add a tag" label="titulo"
-                 track-by="id" :options="$page.props.grades" :multiple="true" :taggable="true" @tag="addTag"></multiselect>
+                            <multiselect v-model="value" tag-placeholder="Add this as new tag"
+                                placeholder="Search or add a tag" label="titulo" track-by="id"
+                                :options="$page.props.grades" :multiple="true" :taggable="true" @tag="addTag">
+                            </multiselect>
 
                             <!-- <select name="Grades" id="Grades"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600">
@@ -91,3 +93,15 @@ export default {
     </div>
 </template>
 <style src="vue-multiselect/dist/vue-multiselect.css"></style>
+<style>
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+</style>
