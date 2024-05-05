@@ -7,6 +7,7 @@ use App\Models\Grades;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Http\Requests\DisciplinasRequest;
+use App\Models\DisciplinasGrades;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
@@ -21,6 +22,7 @@ class DisciplinasController extends Controller
 
     public function create()
     {
+        Disciplinas::find(4)->delete();
         return Inertia::render('Disciplinas/Create', [
             'disciplinas' => Disciplinas::all(),
             'grades'=> Grades::all(),
@@ -33,7 +35,18 @@ class DisciplinasController extends Controller
         try {
             DB::beginTransaction();
 
-            Disciplinas::create($request->validated());
+            $disciplina = Disciplinas::create($request->validated());
+
+            $grades = explode(',',$request->grades);
+
+            foreach ($grades as $grade) {
+                if($grade != ''){
+                    DisciplinasGrades::create([
+                        'disciplinas_id' => $disciplina->id,
+                        'grades_id' => $grade
+                    ]);
+                }
+            }
 
             DB::commit();
             return response()->json(['success' => 'Disciplina adicionada com sucesso!'], 201);
@@ -57,19 +70,29 @@ class DisciplinasController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        try{
+            DB::beginTransaction();
+
+            $disciplinas_grades = DisciplinasGrades::where('disciplinas_id',$id)->get();
+
+            foreach ($disciplinas_grades as $dg) {
+                $dg->delete();
+            }
+
+            Disciplinas::find($id)->delete();
+
+            DB::commit();
+            return response()->json(['success' => 'Disciplina removida com sucesso!'], 200);
+        } catch (Throwable $th) {
+            DB::rollBack();
+            return response()->json(['error' => 'Erro ao remover disciplina! '.$th], 500);
+        }
     }
 }

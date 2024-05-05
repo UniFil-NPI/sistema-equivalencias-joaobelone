@@ -19,7 +19,7 @@ export default {
             let grades = []
 
             this.value_grades?.forEach((element, index) => {
-                grades += element.id
+                grades += element.id + ','
             });
 
             formData.append('grades', grades)
