@@ -17,10 +17,10 @@ return new class extends Migration
             $table->softDeletes();
             $table->string('codigo');
             $table->string('titulo');
-            $table->string('periodo');
+            $table->string('periodo')->nullable();
             $table->integer('carga_horaria');
-            $table->string('tipo');
-            $table->string('modalidade');            
+            $table->string('tipo')->nullable();
+            $table->string('modalidade')->nullable();            
         });
     }
 

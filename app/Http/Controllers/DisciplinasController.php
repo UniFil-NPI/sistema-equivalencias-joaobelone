@@ -36,10 +36,10 @@ class DisciplinasController extends Controller
             Disciplinas::create($request->validated());
 
             DB::commit();
-            return to_route('disciplinas.create');
+            return response()->json(['success' => 'Disciplina adicionada com sucesso!'], 201);
         } catch (Throwable $th) {
             DB::rollBack();
-            return redirect()->back()->withInput()->withErrors('Erro ao adicionar aula!');
+            return response()->json(['error' => 'Erro ao adicionar disciplina! '.$th], 500);
         }
     }
 
