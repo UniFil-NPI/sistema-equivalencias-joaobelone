@@ -10,8 +10,9 @@ export default {
     },
     data() {
         return {
-            value_grades: null,
-            disciplina: this.disciplina
+            value_grades: this.disciplina ? this.disciplina.grades : null,
+            disciplina: this.disciplina,
+            edit: this.edit
         }
     },
     methods: {
@@ -24,8 +25,22 @@ export default {
             });
 
             formData.append('grades', grades)
-
+            
+            this.edit ? this.update(this.disciplina.id,formData) : this.store(formData);
+        },
+        store(formData){
             axios.post(route('disciplinas.store'), formData)
+                .then(response => {
+                    alert(response.data.success);
+                    router.get(route('disciplinas.index'))
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        },
+        update(id, formData){
+            console.log(formData);
+            axios.put(route('disciplinas.update',id), formData)
                 .then(response => {
                     alert(response.data.success);
                     router.get(route('disciplinas.index'))
@@ -47,14 +62,14 @@ export default {
                         <div class="sm:col-span-2 col-span-6">
                             <label for="titulo"
                                 class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Titulo:</label>
-                            <input :value="disciplina.titulo" type="text" name="titulo" id="titulo" required
+                            <input :value="disciplina ? disciplina.titulo : '' " type="text" name="titulo" id="titulo" required
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600"
                                 placeholder="Insira o titulo">
                         </div>
                         <div class="col-span-6 sm:col-span-2">
                             <label for="codigo"
                                 class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Codigo:</label>
-                            <input type="text" name="codigo" id="codigo" required
+                            <input :value="disciplina ? disciplina.codigo : '' " type="text" name="codigo" id="codigo" required
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600"
                                 placeholder="Insira o código">
                         </div>
@@ -62,14 +77,14 @@ export default {
                             <label for="carga_horaria"
                                 class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Carga
                                 horaria:</label>
-                            <input type="number" min="0" name="carga_horaria" id="carga_horaria"
+                            <input :value="disciplina ? disciplina.carga_horaria : '' " type="number" min="0" name="carga_horaria" id="carga_horaria"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600"
                                 placeholder="Insira a carga horária">
                         </div>
                         <div class="col-span-6 sm:col-span-1">
                             <label for="periodo" 
                                 class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Periodo:</label>
-                            <input type="number" min="0" name="periodo" id="periodo"
+                            <input :value="disciplina ? disciplina.periodo : '' " type="number" min="0" name="periodo" id="periodo"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600"
                                 placeholder="Insira o período">
                         </div>
@@ -78,8 +93,8 @@ export default {
                                 class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Tipo:</label>
                             <select name="tipo" id="tipo"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600">
-                                <option value="core">Core</option>
-                                <option value="flex">Flex</option>
+                                <option value="core" :selected="disciplina && disciplina.tipo === 'core'">Core</option>
+                                <option value="flex" :selected="disciplina && disciplina.tipo === 'flex'">Flex</option>
                             </select>
                         </div>
                         <div class="col-span-6 sm:col-span-1">
@@ -87,8 +102,8 @@ export default {
                                 class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Modalidade:</label>
                             <select name="modalidade" id="modalidade"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600">
-                                <option value="presencial">Presencial</option>
-                                <option value="ead">Ead</option>
+                                <option :selected="disciplina && disciplina.modalidade === 'presencial'" value="presencial">Presencial</option>
+                                <option :selected="disciplina && disciplina.modalidade === 'ead'" value="ead">Ead</option>
                             </select>
                         </div>
                         <div class="col-span-6 sm:col-span-4">
@@ -103,7 +118,7 @@ export default {
                     </div>
                     <div class="flex justify-end mt-6">
                         <button type="submit"
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline dark:bg-blue-600">Submit</button>
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline dark:bg-blue-600">Enviar</button>
                     </div>
                 </form>
             </div>

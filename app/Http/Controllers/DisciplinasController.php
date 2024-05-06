@@ -57,13 +57,14 @@ class DisciplinasController extends Controller
 
     public function show(string $id)
     {
-        //
+        
     }
 
     public function edit(string $id)
     {
+
         return Inertia::render('Disciplinas/Edit', [
-            'disciplina' => Disciplinas::find($id)->with('grades'),
+            'disciplina' =>Disciplinas::with('grades')->find($id),
             'grades'=> Grades::all(),
             'csrf_token' => csrf_token()
         ]);
@@ -71,7 +72,33 @@ class DisciplinasController extends Controller
 
     public function update(Request $request, string $id)
     {
-        //
+        dd($request->all());
+        try {
+            DB::beginTransaction();
+
+            $disciplina = Disciplinas::find($id);
+
+            $disciplina->update($request->validated());
+
+            $grades = explode(',',$request->grades);
+
+            // @todoremover disciplinas grades antigas
+
+            foreach ($grades as $grade) {
+                if($grade != ''){
+                    DisciplinasGrades::firstOrCreate([
+                        'disciplinas_id' => $disciplina->id,
+                        'grades_id' => $grade
+                    ]);
+                }
+            }
+
+            DB::commit();
+            return response()->json(['success' => 'Disciplina atualizada com sucesso!'], 201);
+        } catch (Throwable $th) {
+            DB::rollBack();
+            return response()->json(['error' => 'Erro ao atualizar a disciplina! '.$th], 500);
+        }
     }
 
     public function destroy($id)
