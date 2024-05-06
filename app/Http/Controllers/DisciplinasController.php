@@ -22,7 +22,6 @@ class DisciplinasController extends Controller
 
     public function create()
     {
-        Disciplinas::find(4)->delete();
         return Inertia::render('Disciplinas/Create', [
             'disciplinas' => Disciplinas::all(),
             'grades'=> Grades::all(),
