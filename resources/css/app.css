@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.delete-icon:hover{
+    color: red;
+}
+.edit-icon:hover{
+    color: orange;
+}

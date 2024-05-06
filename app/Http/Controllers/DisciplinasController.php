@@ -16,7 +16,7 @@ class DisciplinasController extends Controller
     public function index()
     {
         return Inertia::render('Disciplinas/Index', [
-            'disciplinas' => Disciplinas::all(),
+            'disciplinas' => Disciplinas::with('grades')->get(),
         ]);
     }
 
@@ -63,7 +63,7 @@ class DisciplinasController extends Controller
     public function edit(string $id)
     {
         return Inertia::render('Disciplinas/Edit', [
-            'disciplina' => Disciplinas::find($id),
+            'disciplina' => Disciplinas::find($id)->with('grades'),
             'grades'=> Grades::all(),
             'csrf_token' => csrf_token()
         ]);

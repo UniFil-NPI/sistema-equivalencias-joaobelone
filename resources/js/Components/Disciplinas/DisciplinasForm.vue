@@ -4,13 +4,14 @@ import axios from 'axios'
 import { router } from '@inertiajs/vue3'
 
 export default {
-    props: ['csrf_token', 'grades', 'disciplina'],
+    props: ['csrf_token', 'grades', 'disciplina','edit'],
     components: {
         Multiselect
     },
     data() {
         return {
             value_grades: null,
+            disciplina: this.disciplina
         }
     },
     methods: {
@@ -46,7 +47,7 @@ export default {
                         <div class="sm:col-span-2 col-span-6">
                             <label for="titulo"
                                 class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Titulo:</label>
-                            <input type="text" name="titulo" id="titulo" required
+                            <input :value="disciplina.titulo" type="text" name="titulo" id="titulo" required
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600"
                                 placeholder="Insira o titulo">
                         </div>

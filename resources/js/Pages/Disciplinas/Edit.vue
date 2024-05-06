@@ -17,7 +17,7 @@ const page = usePage();
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Editar Disciplina</h2>
         </template>
 
-        <DisciplinasForm :disciplina="$page.props.disciplina" :grades="$page.props.grades" :csrf_token="page.props.csrf_token" />
+        <DisciplinasForm :edit="true" :disciplina="$page.props.disciplina" :grades="$page.props.grades" :csrf_token="page.props.csrf_token" />
         
     </AuthenticatedLayout>
 </template>
