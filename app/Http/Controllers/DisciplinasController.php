@@ -24,7 +24,7 @@ class DisciplinasController extends Controller
     {
         return Inertia::render('Disciplinas/Create', [
             'disciplinas' => Disciplinas::all(),
-            'grades'=> Grades::all(),
+            'grades' => Grades::all(),
             'csrf_token' => csrf_token()
         ]);
     }
@@ -36,10 +36,10 @@ class DisciplinasController extends Controller
 
             $disciplina = Disciplinas::create($request->validated());
 
-            $grades = explode(',',$request->grades);
+            $grades = explode(',', $request->grades);
 
             foreach ($grades as $grade) {
-                if($grade != ''){
+                if ($grade != '') {
                     DisciplinasGrades::create([
                         'disciplinas_id' => $disciplina->id,
                         'grades_id' => $grade
@@ -51,41 +51,51 @@ class DisciplinasController extends Controller
             return response()->json(['success' => 'Disciplina adicionada com sucesso!'], 201);
         } catch (Throwable $th) {
             DB::rollBack();
-            return response()->json(['error' => 'Erro ao adicionar disciplina! '.$th], 500);
+            return response()->json(['error' => 'Erro ao adicionar disciplina! '], 500);
         }
     }
 
     public function show(string $id)
     {
-        
     }
 
     public function edit(string $id)
     {
 
         return Inertia::render('Disciplinas/Edit', [
-            'disciplina' =>Disciplinas::with('grades')->find($id),
-            'grades'=> Grades::all(),
+            'disciplina' => Disciplinas::with('grades')->find($id),
+            'grades' => Grades::all(),
             'csrf_token' => csrf_token()
         ]);
     }
 
-    public function update(Request $request, string $id)
+    public function update(DisciplinasRequest $request, $id)
     {
-        dd($request->all());
         try {
             DB::beginTransaction();
 
             $disciplina = Disciplinas::find($id);
-
             $disciplina->update($request->validated());
 
-            $grades = explode(',',$request->grades);
+            //remover disciplinas grades antigas
+            $disciplinas_grades = DisciplinasGrades::where('disciplinas_id', $id)->get();
+            foreach ($disciplinas_grades as $dg) {
+                $dg->delete();
+            }
 
-            // @todoremover disciplinas grades antigas
+            //adicionar novas disciplinas grades
+            $grades = explode(',', $request->grades);
+            foreach ($grades as $grade) {
+                if ($grade != '') {
+                    DisciplinasGrades::create([
+                        'disciplinas_id' => $disciplina->id,
+                        'grades_id' => $grade
+                    ]);
+                }
+            }
 
             foreach ($grades as $grade) {
-                if($grade != ''){
+                if ($grade != '') {
                     DisciplinasGrades::firstOrCreate([
                         'disciplinas_id' => $disciplina->id,
                         'grades_id' => $grade
@@ -97,16 +107,16 @@ class DisciplinasController extends Controller
             return response()->json(['success' => 'Disciplina atualizada com sucesso!'], 201);
         } catch (Throwable $th) {
             DB::rollBack();
-            return response()->json(['error' => 'Erro ao atualizar a disciplina! '.$th], 500);
+            return response()->json(['error' => 'Erro ao atualizar a disciplina! '], 500);
         }
     }
 
     public function destroy($id)
     {
-        try{
+        try {
             DB::beginTransaction();
 
-            $disciplinas_grades = DisciplinasGrades::where('disciplinas_id',$id)->get();
+            $disciplinas_grades = DisciplinasGrades::where('disciplinas_id', $id)->get();
 
             foreach ($disciplinas_grades as $dg) {
                 $dg->delete();
@@ -118,7 +128,7 @@ class DisciplinasController extends Controller
             return response()->json(['success' => 'Disciplina removida com sucesso!'], 200);
         } catch (Throwable $th) {
             DB::rollBack();
-            return response()->json(['error' => 'Erro ao remover disciplina! '.$th], 500);
+            return response()->json(['error' => 'Erro ao remover disciplina! ' . $th], 500);
         }
     }
 }

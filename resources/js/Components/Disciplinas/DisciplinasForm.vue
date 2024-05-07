@@ -2,6 +2,7 @@
 import Multiselect from 'vue-multiselect'
 import axios from 'axios'
 import { router } from '@inertiajs/vue3'
+import { toastMixin } from '@/utils/toast' 
 
 export default {
     props: ['csrf_token', 'grades', 'disciplina','edit'],
@@ -31,7 +32,9 @@ export default {
         store(formData){
             axios.post(route('disciplinas.store'), formData)
                 .then(response => {
-                    alert(response.data.success);
+                    toastMixin.fire({
+                        title:response.data.success || response.data.error,
+                    })
                     router.get(route('disciplinas.index'))
                 })
                 .catch(error => {
@@ -39,10 +42,11 @@ export default {
                 });
         },
         update(id, formData){
-            console.log(formData);
-            axios.put(route('disciplinas.update',id), formData)
+            axios.put(route('disciplinas.update',id), formData, { headers: {'Content-Type': 'application/json'}})
                 .then(response => {
-                    alert(response.data.success);
+                    toastMixin.fire({
+                        title:response.data.success || response.data.error,
+                    })
                     router.get(route('disciplinas.index'))
                 })
                 .catch(error => {
@@ -77,7 +81,7 @@ export default {
                             <label for="carga_horaria"
                                 class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Carga
                                 horaria:</label>
-                            <input :value="disciplina ? disciplina.carga_horaria : '' " type="number" min="0" name="carga_horaria" id="carga_horaria"
+                            <input :value="disciplina ? disciplina.carga_horaria : '' " type="number" min="0" name="carga_horaria" id="carga_horaria" required      
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600"
                                 placeholder="Insira a carga horária">
                         </div>
@@ -111,7 +115,7 @@ export default {
                                 class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Grades:</label>
 
                             <multiselect v-model="value_grades" tag-placeholder="Add this as new tag"
-                                placeholder="Adicionar a grades" label="titulo" track-by="id" required
+                                placeholder="Adicionar a grades" label="titulo" track-by="id"
                                 :options="$page.props.grades" :multiple="true">
                             </multiselect>
                         </div>
