@@ -292,7 +292,7 @@ INSERT INTO disciplinas (codigo, titulo, carga_horaria, tipo, modalidade) VALUES
 
 #GRADE ADS 5000
 
-INSERT INTO disciplinas (codigo, titulo, carga_horaria) VALUES
+INSERT INTO disciplinas (codigo, titulo, carga_horaria, modalidade) VALUES
 ('ADS@5018', 'Desenvolvimento de Aplicativos Móveis', 100,'EAD'),
 ('ADS@5006', 'Gerência de Requisitos', 100,'EAD'),
 ('ADS@5007', 'Lógica de Programação e Algoritmos', 100,'EAD'),
