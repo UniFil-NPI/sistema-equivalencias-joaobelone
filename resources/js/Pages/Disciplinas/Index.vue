@@ -9,34 +9,32 @@ import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
 import axios from 'axios';
 import { toastMixin } from '@/utils/toast';
-onMounted(() => {
-});
+
 const page = usePage();
 
 const empty = page.props.disciplinas.length === 0;
 
-const confirmDelete = (id) => {
-    Swal.fire({
+const confirmDelete = async (id) => {
+    const result = await Swal.fire({
         title: "Tem certeza que deseja excluir essa disciplina?",
         text: "Ao excluir essa disciplina, todas as informações relacionadas a ela também serão excluidas!",
         showCancelButton: true,
         confirmButtonText: "Sim",
         cancelButtonText: 'Não',
-    }).then((result) => {
-        if (result.isConfirmed) {
-            axios.delete(route('disciplinas.destroy', id)).then((response) => {
-                toastMixin.fire({
-                    title: response.data.success || response.data.error,
-                })
-                location.reload();
-            }).catch(() => {
-                Swal.fire("Erro ao excluir disciplina", "", "error");
-            });
-
-        } else if (result.isDenied) {
-            Swal.fire("Changes are not saved", "", "info");
-        }
     });
+
+    if (result.isConfirmed) {
+        try {
+            const response = await axios.delete(route('disciplinas.destroy', id));
+            toastMixin.fire({
+                title: response.data.success || response.data.error,
+            }).then(() => { location.reload(); });
+        } catch (error) {
+            Swal.fire("Erro ao excluir disciplina", "", "error");
+        }
+    } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+    }
 }
 </script>
 <template>
