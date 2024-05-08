@@ -15,7 +15,7 @@ class DisciplinasRequest extends FormRequest
             'codigo' => ['string','required'],
             'periodo' => ['int', 'nullable'],
             'carga_horaria' => ['int','required'],
-            'tipo' => ['string', 'required'],
+            'tipo' => ['string', 'nullable'],
             'modalidade' => ['string', 'required'],
             'grades'=>['string','required'] 
         ];

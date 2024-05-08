@@ -97,8 +97,9 @@ export default {
                                 class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Tipo:</label>
                             <select name="tipo" id="tipo"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600">
-                                <option value="core" :selected="disciplina && disciplina.tipo === 'core'">Core</option>
-                                <option value="flex" :selected="disciplina && disciplina.tipo === 'flex'">Flex</option>
+                                <option value="">Não se aplica</option>
+                                <option value="Core" :selected="disciplina && disciplina.tipo === 'Core'">Core</option>
+                                <option value="Flex" :selected="disciplina && disciplina.tipo === 'Flex'">Flex</option>
                             </select>
                         </div>
                         <div class="col-span-6 sm:col-span-1">
@@ -106,8 +107,8 @@ export default {
                                 class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Modalidade:</label>
                             <select name="modalidade" id="modalidade"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600">
-                                <option :selected="disciplina && disciplina.modalidade === 'presencial'" value="presencial">Presencial</option>
-                                <option :selected="disciplina && disciplina.modalidade === 'ead'" value="ead">Ead</option>
+                                <option :selected="disciplina && disciplina.modalidade === 'PRESENCIAL'" value="PRESENCIAL">Presencial</option>
+                                <option :selected="disciplina && disciplina.modalidade === 'EAD'" value="EAD">Ead</option>
                             </select>
                         </div>
                         <div class="col-span-6 sm:col-span-4">
