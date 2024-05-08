@@ -43,7 +43,7 @@ const confirmDelete = async (id) => {
 
     <AuthenticatedLayout>
         <template #header>
-            <div class="flex flex justify-between">
+            <div class="flex justify-between">
                 <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Disciplinas</h2>
                 <a :href="route('disciplinas.create')"
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">+ Criar
