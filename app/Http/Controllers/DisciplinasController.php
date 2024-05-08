@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Disciplinas;
 use App\Models\Grades;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Http\Requests\DisciplinasRequest;
 use App\Models\DisciplinasGrades;
@@ -87,15 +86,6 @@ class DisciplinasController extends Controller
             $grades = explode(',', $request->grades);
             foreach ($grades as $grade) {
                 if ($grade != '') {
-                    DisciplinasGrades::create([
-                        'disciplinas_id' => $disciplina->id,
-                        'grades_id' => $grade
-                    ]);
-                }
-            }
-
-            foreach ($grades as $grade) {
-                if ($grade != '') {
                     DisciplinasGrades::firstOrCreate([
                         'disciplinas_id' => $disciplina->id,
                         'grades_id' => $grade
@@ -128,7 +118,7 @@ class DisciplinasController extends Controller
             return response()->json(['success' => 'Disciplina removida com sucesso!'], 200);
         } catch (Throwable $th) {
             DB::rollBack();
-            return response()->json(['error' => 'Erro ao remover disciplina! ' . $th], 500);
+            return response()->json(['error' => 'Erro ao remover disciplina! '], 500);
         }
     }
 }
