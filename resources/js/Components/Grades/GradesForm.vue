@@ -66,25 +66,25 @@ export default {
                         <div class="col-span-1">
                             <label for="titulo"
                                 class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Titulo:</label>
-                            <input :value="disciplina ? disciplina.titulo : ''" type="text" name="titulo" id="titulo"
-                                required
+                            <input :value="grade ? grade.titulo : ''" type="text" name="titulo" id="titulo" required
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600"
                                 placeholder="Insira o titulo">
                         </div>
                         <div class="col-span-1">
                             <label for="Disciplinas"
                                 class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Disciplinas:</label>
-                            <multiselect v-model="value_disciplinas"
-                                tag-placeholder="Add this as new tag" placeholder="Adicionar disciplinas" label="titulo"
-                                track-by="id" :options="$page.props.disciplinas" :multiple="true">
+                            <multiselect v-model="value_disciplinas" tag-placeholder="Add this as new tag"
+                                placeholder="Adicionar disciplinas" label="titulo" track-by="id"
+                                :options="$page.props.disciplinas" :multiple="true">
                                 <template #option="props">
                                     <div class="option__desc">
-                                        <span class="option__title">{{props.option.codigo}}</span> - <span class="option__small">{{ props.option.titulo }}</span>
+                                        <span class="option__title">{{ props.option.codigo }}</span> - <span
+                                            class="option__small">{{ props.option.titulo }}</span>
                                     </div>
                                 </template>
                             </multiselect>
                         </div>
-                        
+
                     </div>
                     <div class="flex justify-end mt-6">
                         <button type="submit"

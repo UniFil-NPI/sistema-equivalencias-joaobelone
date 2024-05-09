@@ -51,7 +51,7 @@ class GradesController extends Controller
             return response()->json(['success' => 'Grade adicionada com sucesso!'], 201);
         } catch (Throwable $th) {
             DB::rollBack();
-            return response()->json(['error' => 'Erro ao adicionar grade! '.$th], 500);
+            return response()->json(['error' => 'Erro ao adicionar grade! ' . $th], 500);
         }
     }
 
@@ -63,8 +63,8 @@ class GradesController extends Controller
     public function edit(string $id)
     {
         return Inertia::render('Grades/Edit', [
-            'disciplina' => Disciplinas::all(),
-            'grades' => Grades::with('disciplinas')->find($id),
+            'disciplinas' => Disciplinas::all(),
+            'grade' => Grades::with('disciplinas')->find($id),
             'csrf_token' => csrf_token()
         ]);
     }
@@ -119,7 +119,7 @@ class GradesController extends Controller
             return response()->json(['success' => 'Grade removida com sucesso!'], 200);
         } catch (Throwable $th) {
             DB::rollBack();
-            return response()->json(['error' => 'Erro ao remover grade! '], 500);
+            return response()->json(['error' => 'Erro ao remover grade! ' . $th], 500);
         }
     }
 }

@@ -2,30 +2,34 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { usePage } from '@inertiajs/vue3';
-import Menu from 'primevue/menu';
 import { ref } from "vue";
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
+import { toastMixin } from '@/utils/toast';
+
 
 const page = usePage();
-// const menu = ref();
-// const items = ref([
-//     {
-//         items: [
-//             {
-//                 label: 'Refresh',
-//                 icon: 'pi pi-refresh'
-//             },
-//             {
-//                 label: 'Export',
-//                 icon: 'pi pi-upload'
-//             }
-//         ]
-//     }
-// ]);
 
-// const toggle = (event) => {
-//     menu.value.toggle(event);
-// };
+const confirmDelete = async (id) => {
+    const result = await Swal.fire({
+        title: "Tem certeza que deseja excluir essa grade?",
+        text: "Ao excluir essa grade, todas as informações relacionadas a ela também serão excluidas!",
+        showCancelButton: true,
+        confirmButtonText: "Sim",
+        cancelButtonText: 'Não',
+    });
 
+    if (result.isConfirmed) {
+        try {
+            const response = await axios.delete(route('grades.destroy', id));
+            toastMixin.fire({
+                title: response.data.success || response.data.error,
+            }).then(() => { location.reload(); });
+        } catch (error) {
+            Swal.fire("Erro ao excluir grade", "", "error");
+        }
+    }
+}
 </script>
 
 <template>
@@ -47,11 +51,10 @@ const page = usePage();
                 class="max-w-4xl mx-auto sm:px-6 p-8 justify-center grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-12">
                 <div v-for="grade in $page.props.grades" :key="grade.id"
                     class="h-32 w-32 col-span-1 flex justify-center items-center bg-white dark:bg-gray-800 shadow-sm rounded-lg">
-                    <button @click="toggle" aria-haspopup="true" aria-controls="overlay_menu"
-                        class="hover:text-gray-400 btn absolute ml-24 mb-20 text-xs"><i
-                            class="pi pi-ellipsis-v"></i></button>
-                    <!-- <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" /> -->
-
+                    <a :href="route('grades.edit', grade.id)" aria-haspopup="true" aria-controls="overlay_menu"
+                        class="btn absolute mr-24 mb-20 text-xs"><i class="edit-icon pi pi-pencil"></i></a>
+                    <button @click="confirmDelete(grade.id)" aria-haspopup="true" aria-controls="overlay_menu"
+                        class="btn absolute ml-24 mb-20 text-xs"><i class="delete-icon pi pi-trash"></i></button>
                     <h3 class=" text-black dark:text-white text-xl">{{ grade.titulo }}</h3>
                 </div>
             </div>
