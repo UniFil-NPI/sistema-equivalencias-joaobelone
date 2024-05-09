@@ -1,5 +1,4 @@
-## Sistema de Equivalências - João Pedro Belone
-
+## Sistema de Equivalências - [@joaobelone](https://github.com/belone0)
 Laravel 11
 
 `composer install`
