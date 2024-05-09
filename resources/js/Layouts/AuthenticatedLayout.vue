@@ -40,6 +40,10 @@ const showingNavigationDropdown = ref(false);
                                     Grades
                                 </NavLink>
 
+                                <NavLink :href="route('equivalencias.index')" :active="route().current('equivalencias.index')">
+                                    Equivalências
+                                </NavLink>
+
                             </div>
 
                         </div>
@@ -130,6 +134,9 @@ const showingNavigationDropdown = ref(false);
 
                         <ResponsiveNavLink :href="route('grades.index')" :active="route().current('grades.index')">
                             Grades
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('equivalencias.index')" :active="route().current('equivalencias.index')">
+                            Equivalências
                         </ResponsiveNavLink>
                     </div>
 
