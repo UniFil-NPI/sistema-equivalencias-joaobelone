@@ -1,4 +1,4 @@
-## Sistema de Equivalências
+## Sistema de Equivalências - João Pedro Belone
 
 Laravel 11
 
