@@ -7,6 +7,7 @@ use App\Models\Grades;
 use Inertia\Inertia;
 use App\Http\Requests\DisciplinasRequest;
 use App\Models\DisciplinasGrades;
+use App\Models\Equivalencias;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
@@ -111,6 +112,12 @@ class DisciplinasController extends Controller
             foreach ($disciplinas_grades as $dg) {
                 $dg->delete();
             }
+
+            //DESTRUIR EQUIVALENCIAS COM ESSA DISCIPLINA TAMBEM
+            // $equivalencias = Equivalencias::where('disciplinas_id', $id)->get();
+            // foreach ($equivalencias as $equivalencia) {
+            //     $equivalencia->delete();
+            // }
 
             Disciplinas::find($id)->delete();
 
