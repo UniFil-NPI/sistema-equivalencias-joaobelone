@@ -48,7 +48,7 @@ const confirmDelete = async (id) => {
 
         <div class="py-12">
             <div
-                class="max-w-4xl mx-auto sm:px-6 p-8 justify-center grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-12">
+                class="max-w-4xl mx-auto sm:px-6 px-8 justify-center grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-12">
                 <div v-for="grade in $page.props.grades" :key="grade.id"
                     class="h-32 w-32 col-span-1 flex justify-center items-center bg-white dark:bg-gray-800 shadow-sm rounded-lg">
                     <a :href="route('grades.edit', grade.id)" aria-haspopup="true" aria-controls="overlay_menu"

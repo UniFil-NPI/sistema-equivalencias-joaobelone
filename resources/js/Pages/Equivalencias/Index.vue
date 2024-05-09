@@ -49,7 +49,7 @@ const confirmDelete = async (id) => {
             </div>
         </template>
         <div class="py-12">
-            <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                     <div v-if="empty">
                         <div class="flex justify-center flex-col gap-2 items-center h-60">
@@ -60,10 +60,13 @@ const confirmDelete = async (id) => {
                         <DataTable stripedRows paginator :rows="25" :rowsPerPageOptions="[25, 50, 100]"
                             :value="$page.props.equivalencias" tableStyle="min-width: 20rem">
                             <Column field="titulo" header="Titulo" sortable></Column>
-                            <Column field="disciplinas" header="disciplinas" sortable>
+                            <Column field="disciplinas" header="Disciplinas" sortable>
                                 <template #body="slotProps">
-                                    <!-- {{ slotProps.data.length }} -->
-                                    TODO
+                                    <div class="flex gap-1">
+                                        <div v-tooltip.top="disciplina.titulo" class=" hover:cursor-default border border-green-600 p-1 rounded-lg" v-for="disciplina in slotProps.data.disciplinas" :key="disciplina.id">
+                                            {{ disciplina.codigo }}
+                                        </div>
+                                    </div>
                                 </template>
                             </Column>
                             <Column field="id" header="Açoes">
