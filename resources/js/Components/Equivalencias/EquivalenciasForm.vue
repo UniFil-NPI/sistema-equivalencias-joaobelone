@@ -17,6 +17,9 @@ export default {
         }
     },
     methods: {
+        codigoWithTitulo({codigo,titulo}){
+            return `${codigo} — ${titulo}`
+        },
         submitForm() {
             let formData = new FormData(document.getElementById('equivalencias_form'))
             let disciplinas = []
@@ -74,14 +77,8 @@ export default {
                             <label for="Disciplinas"
                                 class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Disciplinas:</label>
                             <multiselect v-model="value_disciplinas" tag-placeholder="Add this as new tag"
-                                placeholder="Adicionar disciplinas" label="titulo" track-by="id"
+                                placeholder="Adicionar disciplinas" :custom-label="codigoWithTitulo" track-by="id"
                                 :options="$page.props.disciplinas" :multiple="true">
-                                <template #option="props">
-                                    <div class="option__desc">
-                                        <span class="option__title">{{ props.option.codigo }}</span> - <span
-                                            class="option__small">{{ props.option.titulo }}</span>
-                                    </div>
-                                </template>
                             </multiselect>
                         </div>
 
