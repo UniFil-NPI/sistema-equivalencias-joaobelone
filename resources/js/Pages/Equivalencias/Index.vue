@@ -62,8 +62,8 @@ const confirmDelete = async (id) => {
                             <Column field="titulo" header="Titulo" sortable></Column>
                             <Column field="disciplinas" header="Disciplinas" sortable>
                                 <template #body="slotProps">
-                                    <div class="flex gap-1">
-                                        <div v-tooltip.top="disciplina.titulo" class=" hover:cursor-default border border-green-600 p-1 rounded-lg" v-for="disciplina in slotProps.data.disciplinas" :key="disciplina.id">
+                                    <div class="flex gap-1 overflow-x-scroll max-w-4xl">
+                                        <div v-tooltip.top="disciplina.titulo" class="text-xs hover:cursor-default border border-green-600 p-1 rounded-lg" v-for="disciplina in slotProps.data.disciplinas" :key="disciplina.id">
                                             {{ disciplina.codigo }}
                                         </div>
                                     </div>
