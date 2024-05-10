@@ -2,9 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-.delete-icon:hover{
+.hover:text-red-600:hover {
     color: red;
 }
-.edit-icon:hover{
+.hover:text-amber-500:hover {
     color: orange;
+}
+
+.unifil-bg {
+    background-color: #fff;
+    background-image: 
+    radial-gradient(at 125% 125%,hsla(35, 96%, 48%, 1) 0px, transparent 50%),
+    radial-gradient(at -25% -25%, hsla(35, 96%, 48%, 1) 0px, transparent 50%);
 }

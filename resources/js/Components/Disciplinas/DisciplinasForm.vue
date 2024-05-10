@@ -123,7 +123,7 @@ export default {
                     </div>
                     <div class="flex justify-end mt-6">
                         <button type="submit"
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline dark:bg-blue-600">Enviar</button>
+                            class="bg-amber-600 hover:bg-amber-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ">Salvar</button>
                     </div>
                 </form>
             </div>

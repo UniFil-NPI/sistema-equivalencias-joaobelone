@@ -1,6 +1,8 @@
 import './bootstrap';
 import '../css/app.css';
-import 'primevue/resources/themes/lara-dark-indigo/theme.css'
+import 'primevue/resources/themes/lara-dark-amber/theme.css'
+// import 'primevue/resources/themes/lara-light-amber/theme.css'
+
 import 'primeicons/primeicons.css'
 
 import { createApp, h } from 'vue';

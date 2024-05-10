@@ -61,7 +61,6 @@ class DisciplinasController extends Controller
 
     public function edit(string $id)
     {
-
         return Inertia::render('Disciplinas/Edit', [
             'disciplina' => Disciplinas::with('grades')->find($id),
             'grades' => Grades::all(),

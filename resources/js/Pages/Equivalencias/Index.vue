@@ -44,7 +44,7 @@ const confirmDelete = async (id) => {
             <div class="flex justify-between">
                 <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Equivalências</h2>
                 <a :href="route('equivalencias.create')"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">+ Criar
+                    class="bg-amber-600 hover:bg-amber-800 text-white font-bold py-2 px-4 rounded-full">+ Criar
                     Equivalência</a>
             </div>
         </template>
@@ -73,9 +73,9 @@ const confirmDelete = async (id) => {
                                 <template #body="slotProps">
                                     <div class="flex gap-4">
                                         <a :href="route('equivalencias.edit', slotProps.data.id)"><i
-                                                class="edit-icon pi pi-pencil"></i></a>
+                                                class="hover:text-amber-500 pi pi-pencil"></i></a>
                                         <button @click="confirmDelete(slotProps.data.id)"><i
-                                                class="delete-icon pi pi-trash"></i></button>
+                                                class="hover:text-red-600 pi pi-trash"></i></button>
                                     </div>
                                 </template>
                             </Column>
