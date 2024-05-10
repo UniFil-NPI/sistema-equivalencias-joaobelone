@@ -27,13 +27,19 @@ class Disciplinas extends Model
         return $this->belongsToMany(Grades::class, 'disciplinas_grades');
     }
 
-    public function equivalencias()
+    public function equivalencias($grade_id = null)
     {
         $equivalencias_id = DisciplinasEquivalencias::where('disciplinas_id', $this->id)->first()->equivalencias_id;
 
         $disciplinas_equivalencias = DisciplinasEquivalencias::where('equivalencias_id', $equivalencias_id)->get();
 
         $disciplinas = Disciplinas::whereIn('id', $disciplinas_equivalencias->pluck('disciplinas_id'))->get();
+
+        if($grade_id){
+            $disciplinas = $disciplinas->filter(function($disciplina) use ($grade_id){
+                return $disciplina->grades->contains($grade_id);
+            });
+        }
 
         return $disciplinas;
     }
