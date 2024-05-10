@@ -28,6 +28,6 @@ class Disciplinas extends Model
     }
 
     public function equivalencias(){
-        return $this->belongsToMany(Equivalencias::class, 'disciplinas_equivalencias');
+        return $this->hasMany(Equivalencias::class, 'disciplinas_equivalencias');
     }
 }

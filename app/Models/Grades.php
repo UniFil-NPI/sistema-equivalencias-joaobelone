@@ -18,6 +18,6 @@ class Grades extends Model
     ];
 
     public function disciplinas(){
-        return $this->belongsToMany(Disciplinas::class, 'disciplinas_grades');
+        return $this->hasMany(Disciplinas::class, 'disciplinas_grades');
     }
 }

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('codigo');
             $table->string('titulo');
             $table->string('periodo')->nullable();
-            $table->integer('carga_horaria');
+            $table->integer('carga_horaria')->nullable();
             $table->string('tipo')->nullable();
             $table->string('modalidade')->nullable();            
         });
