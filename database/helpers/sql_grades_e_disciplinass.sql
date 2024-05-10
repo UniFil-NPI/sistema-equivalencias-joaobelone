@@ -1,8 +1,8 @@
 #grades
 
 INSERT INTO grades (titulo) VALUES
-('Grade 2017'),
-('Grade 2019'),
+('Grade 2017 CC'),
+('Grade 2019 CC'),
 ('Grade Cubo CC'),
 ('ADS Grade 5000');
 
