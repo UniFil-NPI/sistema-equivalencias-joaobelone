@@ -19,7 +19,7 @@ class Disciplinas extends Model
         'periodo',
         'carga_horaria',
         'tipo',
-        'modalidade'       
+        'modalidade'
     ];
 
     public function grades()
@@ -27,7 +27,14 @@ class Disciplinas extends Model
         return $this->belongsToMany(Grades::class, 'disciplinas_grades');
     }
 
-    public function equivalencias(){
-        return $this->hasMany(Equivalencias::class, 'disciplinas_equivalencias');
+    public function equivalencias()
+    {
+        $equivalencias_id = DisciplinasEquivalencias::where('disciplinas_id', $this->id)->first()->equivalencias_id;
+
+        $disciplinas_equivalencias = DisciplinasEquivalencias::where('equivalencias_id', $equivalencias_id)->get();
+
+        $disciplinas = Disciplinas::whereIn('id', $disciplinas_equivalencias->pluck('disciplinas_id'))->get();
+
+        return $disciplinas;
     }
 }
