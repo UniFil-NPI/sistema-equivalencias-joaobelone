@@ -21,6 +21,7 @@ const confirmDelete = async (id) => {
         showCancelButton: true,
         confirmButtonText: "Sim",
         cancelButtonText: 'Não',
+        confirmButtonColor: "#e98e06",
     });
 
     if (result.isConfirmed) {
@@ -44,7 +45,7 @@ const confirmDelete = async (id) => {
             <div class="flex justify-between">
                 <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Equivalências</h2>
                 <a :href="route('equivalencias.create')"
-                    class="bg-amber-600 hover:bg-amber-800 text-white font-bold py-2 px-4 rounded-full">+ Criar
+                    class="bg-primary hover:bg-amber-800 text-white font-bold py-2 px-4 rounded-full">+ Criar
                     Equivalência</a>
             </div>
         </template>
@@ -57,7 +58,7 @@ const confirmDelete = async (id) => {
                         </div>
                     </div>
                     <div v-if="!empty">
-                        <DataTable stripedRows paginator :rows="25" :rowsPerPageOptions="[25, 50, 100]"
+                        <DataTable  removableSort stripedRows paginator :rows="25" :rowsPerPageOptions="[25, 50, 100]"
                             :value="$page.props.equivalencias" tableStyle="min-width: 20rem">
                             <Column field="titulo" header="Titulo" sortable></Column>
                             <Column field="disciplinas" header="Disciplinas" sortable>
@@ -73,7 +74,7 @@ const confirmDelete = async (id) => {
                                 <template #body="slotProps">
                                     <div class="flex gap-4">
                                         <a :href="route('equivalencias.edit', slotProps.data.id)"><i
-                                                class="hover:text-amber-500 pi pi-pencil"></i></a>
+                                                class=" hover:text-amber-500 pi pi-pen-to-square"></i></a>
                                         <button @click="confirmDelete(slotProps.data.id)"><i
                                                 class="hover:text-red-600 pi pi-trash"></i></button>
                                     </div>

@@ -17,6 +17,7 @@ const confirmDelete = async (id) => {
         showCancelButton: true,
         confirmButtonText: "Sim",
         cancelButtonText: 'Não',
+        confirmButtonColor: "#e98e06",
     });
 
     if (result.isConfirmed) {
@@ -41,20 +42,21 @@ const confirmDelete = async (id) => {
             <div class="flex justify-between">
                 <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Grades</h2>
                 <a :href="route('grades.create')"
-                    class="bg-amber-600 hover:bg-amber-800 text-white font-bold py-2 px-4 rounded-full">+ Criar
+                    class="bg-primary hover:bg-amber-800 text-white font-bold py-2 px-4 rounded-full">+ Criar
                     Grade</a>
             </div>
         </template>
 
         <div class="py-12">
             <div
-                class="max-w-4xl mx-auto sm:px-6 px-8 justify-center grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-12">
+                class=" max-w-4xl mx-auto sm:px-6 px-8 justify-center grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-12">
                 <div v-for="grade in $page.props.grades" :key="grade.id"
-                    class="h-32 w-32 col-span-1 flex justify-center items-center bg-white dark:bg-gray-800 shadow-sm rounded-lg">
+                    class="border-2 border-primary p-4 h-36 w-36 col-span-1 flex justify-center items-center bg-white dark:bg-gray-800 shadow-sm rounded-lg">
                     <a :href="route('grades.edit', grade.id)" aria-haspopup="true" aria-controls="overlay_menu"
-                        class="btn absolute mr-24 mb-20 text-xs"><i class="hover:text-amber-500 pi pi-pencil"></i></a>
+                        class="btn absolute mr-24 mb-24 text-xs"><i class="hover:text-amber-500 pi pi-pen-to-square"></i></a>
                     <button @click="confirmDelete(grade.id)" aria-haspopup="true" aria-controls="overlay_menu"
-                        class="btn absolute ml-24 mb-20 text-xs"><i class="hover:text-red-600 pi pi-trash"></i></button>
+                        class="btn absolute ml-24 mb-24 text-xs"><i class="hover:text-red-600 pi pi-trash"></i></button>
+                        
                     <h3 class=" text-black dark:text-white text-xl">{{ grade.titulo }}</h3>
                 </div>
             </div>
