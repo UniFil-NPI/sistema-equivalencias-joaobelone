@@ -88,7 +88,7 @@ export default {
                     </div>
                     <div class="flex justify-end mt-6">
                         <button type="submit"
-                            class="bg-amber-600 hover:bg-amber-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ">Salvar</button>
+                            class="bg-primary hover:bg-amber-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ">Salvar</button>
                     </div>
                 </form>
             </div>
