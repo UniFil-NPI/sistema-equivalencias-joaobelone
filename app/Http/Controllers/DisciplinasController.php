@@ -36,14 +36,15 @@ class DisciplinasController extends Controller
 
             $disciplina = Disciplinas::create($request->validated());
 
-            $grades = explode(',', $request->grades);
-
-            foreach ($grades as $grade) {
-                if ($grade != '') {
-                    DisciplinasGrades::create([
-                        'disciplinas_id' => $disciplina->id,
-                        'grades_id' => $grade
-                    ]);
+            if ($request->grades) {
+                $grades = explode(',', $request->grades);
+                foreach ($grades as $grade) {
+                    if ($grade != '') {
+                        DisciplinasGrades::create([
+                            'disciplinas_id' => $disciplina->id,
+                            'grades_id' => $grade
+                        ]);
+                    }
                 }
             }
 
