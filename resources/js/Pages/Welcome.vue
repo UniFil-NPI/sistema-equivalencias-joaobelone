@@ -56,7 +56,7 @@ defineProps({
                         <h1 class=" text-center sm:text-6xl text-4xl font-black">Sistema de Equivalências</h1>
                         <WelcomeSVG1 class="h-96" />
                         <a :href="$page.props.auth.user ? route('dashboard') : route('login')"
-                            class="btn btn-primary hover:bg-primary/70 bg-primary w-44 text-center font-bold text-white p-4 text-2xl rounded-lg">Entrar</a>
+                            class="mb-20 btn btn-primary hover:bg-primary/70 bg-primary w-44 text-center font-bold text-white p-4 text-2xl rounded-lg">Entrar</a>
                     </div>
                 </main>
             </div>

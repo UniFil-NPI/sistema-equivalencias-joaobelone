@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 .bg-unifil {
-    background-image: url(noise.webp) center center / repeat scroll;
     background-color: hsla(36, 96%, 48%, 1);
     background-image: radial-gradient(
             at 54% 58%,
