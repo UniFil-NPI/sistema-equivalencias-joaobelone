@@ -19,7 +19,8 @@ class Disciplinas extends Model
         'periodo',
         'carga_horaria',
         'tipo',
-        'modalidade'
+        'modalidade',
+        'ativo'
     ];
 
     public function grades()

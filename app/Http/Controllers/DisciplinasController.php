@@ -128,4 +128,25 @@ class DisciplinasController extends Controller
             return response()->json(['error' => 'Erro ao remover disciplina! '], 500);
         }
     }
+
+    public function changeStatus($id)
+    {
+        try {
+            DB::beginTransaction();
+
+            $disciplina = Disciplinas::find($id);
+
+            $disciplina->ativo = !$disciplina->ativo;
+            
+            $disciplina->save();
+
+            DB::commit();
+            if ($disciplina->ativo == 1) return response()->json(['success' => 'Disciplina ativada com sucesso!'], 200);
+
+            return response()->json(['success' => 'Disciplina desativada com sucesso!'], 200);
+        } catch (Throwable $th) {
+            DB::rollBack();
+            return response()->json(['error' => 'Erro ao alterar status da disciplina! '], 500);
+        }
+    }
 }

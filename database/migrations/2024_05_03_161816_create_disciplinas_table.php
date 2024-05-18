@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('carga_horaria')->nullable();
             $table->string('tipo')->nullable();
             $table->string('modalidade')->nullable();            
+            $table->integer('ativo')->default(1);            
         });
     }
 

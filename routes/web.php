@@ -33,6 +33,8 @@ Route::middleware('auth')->group(function () {
         Route::put('/{disciplina}', [DisciplinasController::class, 'update'])->name('disciplinas.update');
         Route::delete('/{disciplina}', [DisciplinasController::class, 'destroy'])->name('disciplinas.destroy');
     });
+
+    Route::post('change-disciplina-status/{disciplina}', [DisciplinasController::class, 'changeStatus'])->name('disciplinas.change-status');
     
     Route::prefix('equivalencias')->group(function () {
         Route::get('/', [EquivalenciasController::class, 'index'])->name('equivalencias.index');
