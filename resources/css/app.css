@@ -2,13 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.hover:text-red-600:hover {
-    color: red;
-}
-.hover:text-amber-500:hover {
-    color: orange;
-}
-
 .bg-unifil {
     background-image: url(noise.webp) center center / repeat scroll;
     background-color: hsla(36, 96%, 48%, 1);

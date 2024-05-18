@@ -51,7 +51,7 @@ defineProps({
                     </nav>
                 </header>
 
-                <main class="mt-44"> <!-- Adjust this margin to fit the header height -->
+                <main class="mt-44">
                     <div class="justify-center flex flex-col items-center">
                         <h1 class=" text-center sm:text-6xl text-4xl font-black">Sistema de Equivalências</h1>
                         <WelcomeSVG1 class="h-96" />
