@@ -13,6 +13,7 @@ export default {
         return {
             value_disciplinas: this.equivalencia ? this.equivalencia.disciplinas : null,
             equivalencia: this.equivalencia,
+            titulo: this.equivalencia ? this.equivalencia.titulo : '',
             edit: this.edit
         }
     },
@@ -69,7 +70,7 @@ export default {
                         <div class="col-span-1">
                             <label for="titulo"
                                 class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Titulo:</label>
-                            <input :value="equivalencia ? equivalencia.titulo : ''" type="text" name="titulo" id="titulo" required
+                            <input v-model="titulo" type="text" name="titulo" id="titulo" required
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600"
                                 placeholder="Insira o titulo">
                         </div>

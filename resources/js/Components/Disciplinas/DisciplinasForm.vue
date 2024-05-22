@@ -2,10 +2,10 @@
 import Multiselect from 'vue-multiselect'
 import axios from 'axios'
 import { router } from '@inertiajs/vue3'
-import { toastMixin } from '@/utils/toast' 
+import { toastMixin } from '@/utils/toast'
 
 export default {
-    props: ['csrf_token', 'grades', 'disciplina','edit'],
+    props: ['csrf_token', 'grades', 'disciplina', 'edit'],
     components: {
         Multiselect
     },
@@ -13,9 +13,16 @@ export default {
         return {
             value_grades: this.disciplina ? this.disciplina.grades : null,
             disciplina: this.disciplina,
-            edit: this.edit
+            edit: this.edit,
+            titulo: this.disciplina ? this.disciplina.titulo : '',
+            codigo: this.disciplina ? this.disciplina.codigo : '',
+            carga_horaria: this.disciplina ? this.disciplina.carga_horaria : 0,
+            periodo: this.disciplina ? this.disciplina.periodo : 0,
+            tipo: this.disciplina ? this.disciplina.tipo : '',
+            modalidade: this.disciplina ? this.disciplina.modalidade : 'PRESENCIAL',
         }
     },
+
     methods: {
         submitForm() {
             let formData = new FormData(document.getElementById('disciplinas_form'))
@@ -26,14 +33,14 @@ export default {
             });
 
             formData.append('grades', grades)
-            
-            this.edit ? this.update(this.disciplina.id,formData) : this.store(formData);
+
+            this.edit ? this.update(this.disciplina.id, formData) : this.store(formData);
         },
-        store(formData){
+        store(formData) {
             axios.post(route('disciplinas.store'), formData)
                 .then(response => {
                     toastMixin.fire({
-                        title:response.data.success || response.data.error,
+                        title: response.data.success || response.data.error,
                     })
                     router.get(route('disciplinas.index'))
                 })
@@ -41,11 +48,11 @@ export default {
                     console.error(error);
                 });
         },
-        update(id, formData){
-            axios.put(route('disciplinas.update',id), formData, { headers: {'Content-Type': 'application/json'}})
+        update(id, formData) {
+            axios.put(route('disciplinas.update', id), formData, { headers: { 'Content-Type': 'application/json' } })
                 .then(response => {
                     toastMixin.fire({
-                        title:response.data.success || response.data.error,
+                        title: response.data.success || response.data.error,
                     })
                     router.get(route('disciplinas.index'))
                 })
@@ -66,14 +73,14 @@ export default {
                         <div class="sm:col-span-2 col-span-6">
                             <label for="titulo"
                                 class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Titulo:</label>
-                            <input :value="disciplina ? disciplina.titulo : '' " type="text" name="titulo" id="titulo" required
+                            <input v-model="titulo" type="text" name="titulo" id="titulo" required
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600"
                                 placeholder="Insira o titulo">
                         </div>
                         <div class="col-span-6 sm:col-span-2">
                             <label for="codigo"
                                 class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Codigo:</label>
-                            <input :value="disciplina ? disciplina.codigo : '' " type="text" name="codigo" id="codigo" required
+                            <input v-model="codigo" type="text" name="codigo" id="codigo" required
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600"
                                 placeholder="Insira o código">
                         </div>
@@ -81,14 +88,15 @@ export default {
                             <label for="carga_horaria"
                                 class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Carga
                                 horaria:</label>
-                            <input :value="disciplina ? disciplina.carga_horaria : '' " type="number" min="0" name="carga_horaria" id="carga_horaria" required      
+                            <input v-model="carga_horaria" type="number" min="0" name="carga_horaria" id="carga_horaria"
+                                required
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600"
                                 placeholder="Insira a carga horária">
                         </div>
                         <div class="col-span-6 sm:col-span-1">
-                            <label for="periodo" 
+                            <label for="periodo"
                                 class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Periodo:</label>
-                            <input :value="disciplina ? disciplina.periodo : '' " type="number" min="0" name="periodo" id="periodo"
+                            <input v-model="periodo" type="number" min="0" name="periodo" id="periodo"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600"
                                 placeholder="Insira o período">
                         </div>
@@ -107,8 +115,10 @@ export default {
                                 class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Modalidade:</label>
                             <select name="modalidade" id="modalidade"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600">
-                                <option :selected="disciplina && disciplina.modalidade === 'PRESENCIAL'" value="PRESENCIAL">Presencial</option>
-                                <option :selected="disciplina && disciplina.modalidade === 'EAD'" value="EAD">Ead</option>
+                                <option :selected="disciplina && disciplina.modalidade === 'PRESENCIAL'"
+                                    value="PRESENCIAL">Presencial</option>
+                                <option :selected="disciplina && disciplina.modalidade === 'EAD'" value="EAD">Ead
+                                </option>
                             </select>
                         </div>
                         <div class="col-span-6 sm:col-span-4">
