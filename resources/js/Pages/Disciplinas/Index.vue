@@ -112,7 +112,7 @@ const filters = ref({
                                         <label class="flex cursor-pointer select-none items-center">
                                             <div class="relative">
                                                 <input type="checkbox" class="sr-only" @change="changeDisciplinaStatus(slotProps.data.id)" />
-                                                <div class="block h-6 w-10 rounded-full bg-[#111827]"></div>
+                                                <div class="block h-6 w-10 rounded-full bg-gray-200 dark:bg-[#111827]"></div>
                                                 <div :class="{ 'translate-x-full !bg-green-500': slotProps.data.ativo === 1 }"
                                                     class="dot absolute left-1 top-1 h-4 w-4 rounded-full bg-gray-50/50 transition">
                                                 </div>
