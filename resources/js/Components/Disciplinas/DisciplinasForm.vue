@@ -36,13 +36,23 @@ export default {
 
             this.edit ? this.update(this.disciplina.id, formData) : this.store(formData);
         },
+        toast(response) {
+            if (response.data.success) {
+                toastMixin.fire({
+                    title: response.data.success,
+                })
+                router.get(route('disciplinas.index'))
+                return;
+            }
+            toastMixin.fire({
+                title: response.data.error,
+                icon: 'error'
+            });
+        },
         store(formData) {
             axios.post(route('disciplinas.store'), formData)
                 .then(response => {
-                    toastMixin.fire({
-                        title: response.data.success || response.data.error,
-                    })
-                    router.get(route('disciplinas.index'))
+                    this.toast(response)
                 })
                 .catch(error => {
                     console.error(error);
@@ -51,10 +61,7 @@ export default {
         update(id, formData) {
             axios.put(route('disciplinas.update', id), formData, { headers: { 'Content-Type': 'application/json' } })
                 .then(response => {
-                    toastMixin.fire({
-                        title: response.data.success || response.data.error,
-                    })
-                    router.get(route('disciplinas.index'))
+                    this.toast(response)
                 })
                 .catch(error => {
                     console.error(error);

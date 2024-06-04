@@ -19,7 +19,7 @@ import  DisciplinasSVG from "@/assets/svgs/DisciplinasSVG.vue";
                 <a href="#">
                     <div
                         class="hover:scale-105 mb-4 hover:border-primary border-4 border-transparent transition ease-in-out bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                        <div class=" p-6 text-gray-900 text-xl font-bold dark:text-gray-100">UIUI EXEMPLO EXEMPLO <DisciplinasSVG/></div>
+                        <div class=" p-6 text-gray-900 text-xl font-bold dark:text-gray-100">Gerar Equivalências - WIP <DisciplinasSVG/></div>
                     </div>
                 </a>
             </div>

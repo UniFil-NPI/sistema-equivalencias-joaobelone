@@ -32,6 +32,9 @@ class DisciplinasController extends Controller
     public function store(DisciplinasRequest $request)
     {
         try {
+
+            if(Disciplinas::where('codigo', $request->codigo)->first()) return response()->json(['error' => 'Disciplina já cadastrada!']);
+
             DB::beginTransaction();
 
             $disciplina = Disciplinas::create($request->validated());
