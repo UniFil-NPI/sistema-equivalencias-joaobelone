@@ -30,13 +30,23 @@ export default {
 
             this.edit ? this.update(this.grade.id, formData) : this.store(formData);
         },
+        toast(response) {
+            if (response.data.success) {
+                toastMixin.fire({
+                    title: response.data.success,
+                })
+                router.get(route('grades.index'))
+                return;
+            }
+            toastMixin.fire({
+                title: response.data.error,
+                icon: 'error'
+            });
+        },
         store(formData) {
             axios.post(route('grades.store'), formData)
                 .then(response => {
-                    toastMixin.fire({
-                        title: response.data.success || response.data.error,
-                    })
-                    router.get(route('grades.index'))
+                    this.toast(response)
                 })
                 .catch(error => {
                     console.error(error);
@@ -45,10 +55,7 @@ export default {
         update(id, formData) {
             axios.put(route('grades.update', id), formData, { headers: { 'Content-Type': 'application/json' } })
                 .then(response => {
-                    toastMixin.fire({
-                        title: response.data.success || response.data.error,
-                    })
-                    router.get(route('grades.index'))
+                    this.toast(response)
                 })
                 .catch(error => {
                     console.error(error);

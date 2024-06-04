@@ -33,13 +33,23 @@ export default {
 
             this.edit ? this.update(this.equivalencia.id, formData) : this.store(formData);
         },
+        toast(response) {
+            if (response.data.success) {
+                toastMixin.fire({
+                    title: response.data.success,
+                })
+                router.get(route('equivalencias.index'))
+                return;
+            }
+            toastMixin.fire({
+                title: response.data.error,
+                icon: 'error'
+            });
+        },
         store(formData) {
             axios.post(route('equivalencias.store'), formData)
                 .then(response => {
-                    toastMixin.fire({
-                        title: response.data.success || response.data.error,
-                    })
-                    router.get(route('equivalencias.index'))
+                    this.toast(response)
                 })
                 .catch(error => {
                     console.error(error);
@@ -48,10 +58,7 @@ export default {
         update(id, formData) {
             axios.put(route('equivalencias.update', id), formData, { headers: { 'Content-Type': 'application/json' } })
                 .then(response => {
-                    toastMixin.fire({
-                        title: response.data.success || response.data.error,
-                    })
-                    router.get(route('equivalencias.index'))
+                    this.toast(response)
                 })
                 .catch(error => {
                     console.error(error);
