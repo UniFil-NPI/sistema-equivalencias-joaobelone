@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\{DisciplinasController, GradesController, EquivalenciasController};
+use App\Http\Controllers\{DisciplinasController, GradesController, EquivalenciasController, GeracaoController};
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -54,6 +54,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/{grade}/edit', [GradesController::class, 'edit'])->name('grades.edit');
         Route::put('/{grade}', [GradesController::class, 'update'])->name('grades.update');
         Route::delete('/{grade}', [GradesController::class, 'destroy'])->name('grades.destroy');
+    });
+
+    Route::prefix('geracao')->group(function () {
+        Route::get('/', [GeracaoController::class, 'geracao'])->name('geracao.page');
     });
 });
 

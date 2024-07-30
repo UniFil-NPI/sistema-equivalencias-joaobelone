@@ -16,10 +16,10 @@ import  DisciplinasSVG from "@/assets/svgs/DisciplinasSVG.vue";
         <div class="flex justify-center">
             <div class="sm:max-w-2xl justify-center grid grid-cols-2 gap-4">
                 <div class="py-12 col-span-2 sm:col-span-1">
-                <a href="#">
+                <a :href="route('geracao.page')">
                     <div
                         class="hover:scale-105 mb-4 hover:border-primary border-4 border-transparent transition ease-in-out bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                        <div class=" p-6 text-gray-900 text-xl font-bold dark:text-gray-100">Gerar Equivalências - WIP <DisciplinasSVG/></div>
+                        <div class=" p-6 text-gray-900 text-xl font-bold dark:text-gray-100">Gerar Equivalências<DisciplinasSVG/></div>
                     </div>
                 </a>
             </div>
