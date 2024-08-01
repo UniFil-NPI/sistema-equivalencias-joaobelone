@@ -3,14 +3,12 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { usePage } from '@inertiajs/vue3';
 import Button from 'primevue/button';
-
+import Select from 'primevue/select';
 import Stepper from 'primevue/stepper';
 import StepList from 'primevue/steplist';
 import StepPanels from 'primevue/steppanels';
-import StepItem from 'primevue/stepitem';
 import Step from 'primevue/step';
 import StepPanel from 'primevue/steppanel';
-
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
 import axios from 'axios';
@@ -21,6 +19,7 @@ const grades = ref([{ label: 'Grade 1', value: 'Grade 1' }, { label: 'Grade 2', 
 );
 
 const grade_antiga = ref(null)
+const grade_nova = ref(null)
 
 const page = usePage();
 
@@ -45,24 +44,47 @@ const page = usePage();
                     </StepList>
                     <StepPanels>
                         <StepPanel class="rounded-lg p-6" v-slot="{ activateCallback }" value="1">
-                            <div class="flex flex-col h-48">
+                            <div class="flex flex-col min-h-60">
                                 <h1 class="font-semibold text-3xl">Selecione a grade antiga e a grade nova</h1>
+                                <div class="flex mt-14 justify-center gap-10">
+
+                                    <div class="flex flex-col w-fit">
+                                        <label class="mb-2" for="grade_antiga">Grade Antiga</label>
+                                        <Select v-model="grade_antiga" :options="grades" optionLabel="label"
+                                            name="grade_antiga" placeholder="Selecione uma grade"
+                                            class="w-full md:w-56" />
+                                    </div>
+
+                                    <div class=" hidden lg:flex justify-center items-end">
+                                        <i style="font-size: 50px;" class=" text-primary pi pi-arrow-right" />
+                                    </div>
+
+                                    <div class="flex flex-col w-fit">
+                                        <label class="mb-2" for="grade_nova">Grade Nova</label>
+                                        <Select v-model="grade_nova" :options="grades" optionLabel="label"
+                                            name="grade_nova" placeholder="Selecione uma grade"
+                                            class="w-full md:w-56" />
+                                    </div>
+
+                                </div>
                             </div>
                             <div class="flex pt-6 justify-end">
-                                <Button label="Próximo" icon="pi pi-arrow-right" @click="activateCallback('2')" iconPos="right" />
+                                <Button label="Próximo" icon="pi pi-arrow-right" @click="activateCallback('2')"
+                                    iconPos="right" />
                             </div>
                         </StepPanel>
                         <StepPanel class="rounded-lg p-6" v-slot="{ activateCallback }" value="2">
                             <div class="flex flex-col h-48">
                                 <div
                                     class=" rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium">
-                                    <h1 class="font-semibold text-3xl">Selecione a grade antiga e a grade nova</h1>
+                                    <h1 class="font-semibold text-3xl">asdasdasd</h1>
                                 </div>
                             </div>
                             <div class="flex pt-6 justify-between">
                                 <Button label="Voltar" severity="secondary" icon="pi pi-arrow-left"
                                     @click="activateCallback('1')" />
-                                <Button label="Próximo" icon="pi pi-arrow-right" @click="activateCallback('3')" iconPos="right" />
+                                <Button label="Próximo" icon="pi pi-arrow-right" @click="activateCallback('3')"
+                                    iconPos="right" />
                             </div>
                         </StepPanel>
                         <StepPanel class="rounded-lg p-6" v-slot="{ activateCallback }" value="3">
@@ -78,15 +100,7 @@ const page = usePage();
                         </StepPanel>
                     </StepPanels>
                 </Stepper>
-
-
             </div>
         </div>
     </AuthenticatedLayout>
 </template>
-<style>
-.p-stepper-panels {
-    margin-top: 2%;
-    border-radius: 6px;
-}
-</style>
