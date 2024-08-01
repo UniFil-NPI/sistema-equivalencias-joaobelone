@@ -1,12 +1,3 @@
-## Sistema de Equivalências - [@joaobelone](https://github.com/belone0)
-Laravel 11
+## Sistema de Equivalências - [@joaobelone](https://github.com/belone0) 
 
-`composer install`
-
-`npm install`
-
-`php artisan migrate`
-
-`php artisan serve`
-
-`npm run dev`
+# 😏👀
