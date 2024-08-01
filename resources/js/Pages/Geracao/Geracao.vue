@@ -3,8 +3,14 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { usePage } from '@inertiajs/vue3';
 import Button from 'primevue/button';
+
 import Stepper from 'primevue/stepper';
-import StepperPanel from 'primevue/stepperpanel';
+import StepList from 'primevue/steplist';
+import StepPanels from 'primevue/steppanels';
+import StepItem from 'primevue/stepitem';
+import Step from 'primevue/step';
+import StepPanel from 'primevue/steppanel';
+
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
 import axios from 'axios';
@@ -31,61 +37,55 @@ const page = usePage();
         </template>
         <div class="py-12">
             <div class="card flex justify-center ">
-
-                <Stepper linear class="max-w-7xl w-full">
-                    <StepperPanel header="Etapa I">
-                        <template #content="{ nextCallback }">
-                            <h1 class="font-semibold text-2xl">Selecione a grade antiga e a grade nova</h1>
-                            <div class="p-12 flex justify-around flex-column h-12rem">
-
-                                <select class="focus:border-primary border-2 text-black dark:text-white dark:bg-gray-900 rounded-md p-2">
-                                    <option value="">Selecione a grade</option>
-                                    <option value="">Selecione a grade</option>
-                                    <option value="">Selecione a grade</option>
-                                </select>
-                                <div>asd</div>
+                <Stepper value="1" linear class=" basis-[70rem]">
+                    <StepList>
+                        <Step value="1">Etapa I</Step>
+                        <Step value="2">Etapa II</Step>
+                        <Step value="3">Etapa III</Step>
+                    </StepList>
+                    <StepPanels>
+                        <StepPanel class="rounded-lg p-6" v-slot="{ activateCallback }" value="1">
+                            <div class="flex flex-col h-48">
+                                <h1 class="font-semibold text-3xl">Selecione a grade antiga e a grade nova</h1>
                             </div>
-                            <div class="flex pt-4 justify-end">
-                                <Button class="bg-primary hover:bg-amber-800 text-white font-bold py-2 px-4 rounded-full"  label="Próximo" icon="pi pi-arrow-right" iconPos="right" @click="nextCallback" />
+                            <div class="flex pt-6 justify-end">
+                                <Button label="Próximo" icon="pi pi-arrow-right" @click="activateCallback('2')" iconPos="right" />
                             </div>
-                        </template>
-                    </StepperPanel>
-                    <StepperPanel header="Etapa II">
-                        <template #content="{ prevCallback, nextCallback }">
-                            <h1 class="font-semibold text-2xl">Faça upload do histórico do aluno</h1>
-                            <div class="flex flex-column h-12rem">
-                                asd 2
-                            </div>
-                            <div class="flex pt-4 justify-between">
-                                <div>
-                                    <Button class="border-primary hover:bg-amber-800 text-white font-bold py-2 px-4 rounded-full" label="Voltar" severity="secondary" icon="pi pi-arrow-left"
-                                        @click="prevCallback" />
-                                </div>
-                                <div>
-                                    <Button class="bg-primary hover:bg-amber-800 text-white font-bold py-2 px-4 rounded-full" label="Próximo" icon="pi pi-arrow-right" iconPos="right"
-                                        @click="nextCallback" />
+                        </StepPanel>
+                        <StepPanel class="rounded-lg p-6" v-slot="{ activateCallback }" value="2">
+                            <div class="flex flex-col h-48">
+                                <div
+                                    class=" rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium">
+                                    <h1 class="font-semibold text-3xl">Selecione a grade antiga e a grade nova</h1>
                                 </div>
                             </div>
-                        </template>
-                    </StepperPanel>
-                    <StepperPanel header="Etapa III">
-                        <template #content="{ prevCallback }">
-                            <div class="flex flex-column h-12rem">
-                                asd 3
+                            <div class="flex pt-6 justify-between">
+                                <Button label="Voltar" severity="secondary" icon="pi pi-arrow-left"
+                                    @click="activateCallback('1')" />
+                                <Button label="Próximo" icon="pi pi-arrow-right" @click="activateCallback('3')" iconPos="right" />
                             </div>
-                            <div class="flex pt-4 justify-start">
-                                <Button class="bg-primary hover:bg-amber-800 text-white font-bold py-2 px-4 rounded-full" label="Voltar" severity="secondary" icon="pi pi-arrow-left"
-                                    @click="prevCallback" />
+                        </StepPanel>
+                        <StepPanel class="rounded-lg p-6" v-slot="{ activateCallback }" value="3">
+                            <div class="flex flex-col h-48">
+                                <div
+                                    class=" rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium">
+                                    Content III</div>
                             </div>
-                        </template>
-                    </StepperPanel>
+                            <div class="pt-6">
+                                <Button label="Voltar" severity="secondary" icon="pi pi-arrow-left"
+                                    @click="activateCallback('2')" />
+                            </div>
+                        </StepPanel>
+                    </StepPanels>
                 </Stepper>
+
+
             </div>
         </div>
     </AuthenticatedLayout>
 </template>
 <style>
-.p-stepper-panels{
+.p-stepper-panels {
     margin-top: 2%;
     border-radius: 6px;
 }

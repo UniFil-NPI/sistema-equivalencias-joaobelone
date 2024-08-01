@@ -19,9 +19,10 @@
         "vue": "^3.4.0"
     },
     "dependencies": {
+        "@primevue/themes": "^4.0.3",
         "flowbite": "^2.3.0",
         "primeicons": "^7.0.0",
-        "primevue": "^3.52.0",
+        "primevue": "^4.0.3",
         "sweetalert2": "^11.10.8",
         "vue-multiselect": "^3.0.0"
     }
