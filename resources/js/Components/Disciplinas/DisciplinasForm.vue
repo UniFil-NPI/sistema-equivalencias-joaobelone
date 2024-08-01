@@ -1,13 +1,13 @@
 <script>
-import Multiselect from 'vue-multiselect'
 import axios from 'axios'
 import { router } from '@inertiajs/vue3'
 import { toastMixin } from '@/utils/toast'
+import MultiSelect from 'primevue/multiselect';
 
 export default {
     props: ['csrf_token', 'grades', 'disciplina', 'edit'],
     components: {
-        Multiselect
+        MultiSelect
     },
     data() {
         return {
@@ -81,14 +81,14 @@ export default {
                             <label for="titulo"
                                 class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Titulo:</label>
                             <input v-model="titulo" type="text" name="titulo" id="titulo" required
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-[#192332] dark:text-gray-300 dark:border-gray-600"
                                 placeholder="Insira o titulo">
                         </div>
                         <div class="col-span-6 sm:col-span-2">
                             <label for="codigo"
                                 class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Codigo:</label>
                             <input v-model="codigo" type="text" name="codigo" id="codigo" required
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-[#192332] dark:text-gray-300 dark:border-gray-600"
                                 placeholder="Insira o código">
                         </div>
                         <div class="col-span-6 sm:col-span-1">
@@ -97,21 +97,21 @@ export default {
                                 horaria:</label>
                             <input v-model="carga_horaria" type="number" min="0" name="carga_horaria" id="carga_horaria"
                                 required
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-[#192332] dark:text-gray-300 dark:border-gray-600"
                                 placeholder="Insira a carga horária">
                         </div>
                         <div class="col-span-6 sm:col-span-1">
                             <label for="periodo"
                                 class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Periodo:</label>
                             <input v-model="periodo" type="number" min="0" name="periodo" id="periodo"
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-[#192332] dark:text-gray-300 dark:border-gray-600"
                                 placeholder="Insira o período">
                         </div>
                         <div class="col-span-6 sm:col-span-1">
                             <label for="tipo"
                                 class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Tipo:</label>
                             <select name="tipo" id="tipo"
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600">
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-[#192332] dark:text-gray-300 dark:border-gray-600">
                                 <option value="">Não se aplica</option>
                                 <option value="Core" :selected="disciplina && disciplina.tipo === 'Core'">Core</option>
                                 <option value="Flex" :selected="disciplina && disciplina.tipo === 'Flex'">Flex</option>
@@ -121,7 +121,7 @@ export default {
                             <label for="modalidade"
                                 class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Modalidade:</label>
                             <select name="modalidade" id="modalidade"
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600">
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-[#192332] dark:text-gray-300 dark:border-gray-600">
                                 <option :selected="disciplina && disciplina.modalidade === 'PRESENCIAL'"
                                     value="PRESENCIAL">Presencial</option>
                                 <option :selected="disciplina && disciplina.modalidade === 'EAD'" value="EAD">Ead
@@ -132,10 +132,8 @@ export default {
                             <label for="Grades"
                                 class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Grades:</label>
 
-                            <multiselect v-model="value_grades" tag-placeholder="Add this as new tag"
-                                placeholder="Adicionar a grades" label="titulo" track-by="id"
-                                :options="$page.props.grades" :multiple="true">
-                            </multiselect>
+                            <MultiSelect v-model="value_grades" :options="$page.props.grades" filter optionLabel="titulo" display="chip"
+                                placeholder="Adicionar a grades"  class="w-full" dataKey="id" />
                         </div>
                     </div>
                     <div class="flex justify-end mt-6">
@@ -147,7 +145,6 @@ export default {
         </div>
     </div>
 </template>
-<style src="vue-multiselect/dist/vue-multiselect.css"></style>
 <style>
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

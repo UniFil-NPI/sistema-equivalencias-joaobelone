@@ -1,13 +1,13 @@
 <script>
-import Multiselect from 'vue-multiselect'
 import axios from 'axios'
 import { router } from '@inertiajs/vue3'
 import { toastMixin } from '@/utils/toast'
+import MultiSelect from 'primevue/multiselect';
 
 export default {
     props: ['csrf_token', 'equivalencia', 'disciplinas', 'edit'],
     components: {
-        Multiselect
+        MultiSelect
     },
     data() {
         return {
@@ -18,7 +18,7 @@ export default {
         }
     },
     methods: {
-        codigoWithTitulo({codigo,titulo}){
+        codigoWithTitulo({ codigo, titulo }) {
             return `${codigo} — ${titulo}`
         },
         submitForm() {
@@ -78,16 +78,23 @@ export default {
                             <label for="titulo"
                                 class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Titulo:</label>
                             <input v-model="titulo" type="text" name="titulo" id="titulo" required
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-[#192332] dark:text-gray-300 dark:border-gray-600"
                                 placeholder="Insira o titulo">
                         </div>
                         <div class="col-span-1">
                             <label for="Disciplinas"
                                 class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Disciplinas:</label>
-                            <multiselect v-model="value_disciplinas" tag-placeholder="Add this as new tag"
-                                placeholder="Adicionar disciplinas" :custom-label="codigoWithTitulo" track-by="id"
-                                :options="$page.props.disciplinas" :multiple="true">
-                            </multiselect>
+
+                            <MultiSelect v-model="value_disciplinas" :options="$page.props.disciplinas" filter
+                                scrollHeight="25rem" dataKey="id" :virtualScrollerOptions="{ itemSize: 44 }"
+                                optionLabel="titulo" display="chip" placeholder="Adicionar disciplinas" class="w-full">
+                                <template #option="props">
+                                    <div class="flex items-center">
+                                        <span class="option__title">{{ props.option.codigo }}</span> &nbsp - &nbsp <span
+                                            class="option__small">{{ props.option.titulo }}</span>
+                                    </div>
+                                </template>
+                            </MultiSelect>
                         </div>
 
                     </div>
@@ -100,7 +107,6 @@ export default {
         </div>
     </div>
 </template>
-<style src="vue-multiselect/dist/vue-multiselect.css"></style>
 <style>
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
