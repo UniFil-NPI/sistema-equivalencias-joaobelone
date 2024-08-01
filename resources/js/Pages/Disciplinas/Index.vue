@@ -13,6 +13,7 @@ import 'sweetalert2/src/sweetalert2.scss'
 import axios from 'axios';
 import { toastMixin } from '@/utils/toast';
 import { FilterMatchMode } from '@primevue/core/api';
+import ToggleSwitch from 'primevue/toggleswitch';
 
 const page = usePage();
 
@@ -109,15 +110,9 @@ const filters = ref({
                             <Column field="id" header="Açoes">
                                 <template #body="slotProps">
                                     <div class="flex gap-4">
-                                        <label class="flex cursor-pointer select-none items-center">
-                                            <div class="relative">
-                                                <input type="checkbox" class="sr-only" @change="changeDisciplinaStatus(slotProps.data.id)" />
-                                                <div class="block h-6 w-10 rounded-full bg-gray-200 dark:bg-[#111827]"></div>
-                                                <div :class="{ 'translate-x-full !bg-green-500': slotProps.data.ativo === 1 }"
-                                                    class="dot absolute left-1 top-1 h-4 w-4 rounded-full bg-gray-50/50 transition">
-                                                </div>
-                                            </div>
-                                        </label>
+                                        <ToggleSwitch :modelValue="(slotProps.data.ativo == 1 ? true : false)"
+                                            @update:modelValue="value => slotProps.data.ativo = value"
+                                            @change="changeDisciplinaStatus(slotProps.data.id)" />
                                         <a :href="route('disciplinas.edit', slotProps.data.id)"><i
                                                 class="hover:text-amber-500 pi pi-pen-to-square"></i></a>
                                         <button @click="confirmDelete(slotProps.data.id)"><i
