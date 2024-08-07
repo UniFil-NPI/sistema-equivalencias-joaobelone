@@ -4,6 +4,7 @@ import { Head } from '@inertiajs/vue3';
 import { usePage } from '@inertiajs/vue3';
 import Button from 'primevue/button';
 import Select from 'primevue/select';
+import FileUpload from 'primevue/fileupload';
 import Stepper from 'primevue/stepper';
 import StepList from 'primevue/steplist';
 import StepPanels from 'primevue/steppanels';
@@ -20,8 +21,17 @@ const grades = ref([{ label: 'Grade 1', value: 'Grade 1' }, { label: 'Grade 2', 
 
 const grade_antiga = ref(null)
 const grade_nova = ref(null)
+const fileupload = ref();
 
 const page = usePage();
+
+const upload = () => {
+    fileupload.value.upload();
+};
+
+const onUpload = () => {
+
+};
 
 </script>
 <template>
@@ -74,12 +84,15 @@ const page = usePage();
                             </div>
                         </StepPanel>
                         <StepPanel class="rounded-lg p-6" v-slot="{ activateCallback }" value="2">
-                            <div class="flex flex-col h-48">
-                                <div
-                                    class=" rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium">
-                                    <h1 class="font-semibold text-3xl">asdasdasd</h1>
+                            <div class="flex flex-col max-h-60">
+                                <h1 class="font-semibold text-3xl">Faça upload do arquivo de histórico</h1>
+                                <div class="flex mt-14 items-center justify-center flex-col ">
+                                    <i style="font-size: 90px;" class="text-primary pi pi-file mb-8"></i>
+                                    <FileUpload ref="fileupload" mode="basic" name="demo[]" url="/api/upload"
+                                        accept="image/*" :maxFileSize="1000000" @upload="onUpload" />
                                 </div>
                             </div>
+
                             <div class="flex pt-6 justify-between">
                                 <Button label="Voltar" severity="secondary" icon="pi pi-arrow-left"
                                     @click="activateCallback('1')" />
@@ -88,14 +101,18 @@ const page = usePage();
                             </div>
                         </StepPanel>
                         <StepPanel class="rounded-lg p-6" v-slot="{ activateCallback }" value="3">
-                            <div class="flex flex-col h-48">
-                                <div
-                                    class=" rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium">
-                                    Content III</div>
+                            <div class="flex flex-col max-h-60">
+                                <h1 class="font-semibold text-3xl">Tudo pronto para gerar as
+                                    equivalências! </h1>
+                                <div class="flex items-center justify-center h-60 gap-4 ">
+                                    <i style="font-size: 90px;" class="text-primary pi pi-check"></i>
+                                </div>
                             </div>
-                            <div class="pt-6">
+                            <div class="pt-6 flex justify-between">
                                 <Button label="Voltar" severity="secondary" icon="pi pi-arrow-left"
                                     @click="activateCallback('2')" />
+                                <Button class="" iconPos="right" icon="pi pi-cog" label="Gerar Equivalências"
+                                    @click="upload" />
                             </div>
                         </StepPanel>
                     </StepPanels>
