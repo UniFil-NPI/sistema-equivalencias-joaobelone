@@ -132,8 +132,9 @@ export default {
                             <label for="Grades"
                                 class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Grades:</label>
 
-                            <MultiSelect v-model="value_grades" :options="$page.props.grades" filter optionLabel="titulo" display="chip"
-                                placeholder="Adicionar a grades"  class="w-full" dataKey="id" />
+                            <MultiSelect v-model="value_grades" :options="$page.props.grades" filter
+                                optionLabel="titulo" display="chip" placeholder="Adicionar a grades" class="w-full"
+                                dataKey="id" />
                         </div>
                     </div>
                     <div class="flex justify-end mt-6">

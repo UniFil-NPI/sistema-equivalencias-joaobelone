@@ -36,18 +36,31 @@ const ch_insert = ref(null);
 
 const disciplinas_selecionadas_list = ref([]);
 
-const insert_disciplinas = (codigo, titulo, carga_horaria) => {
-    disciplinas_selecionadas_list.push({ codigo, titulo, carga_horaria });
+const insert_disciplinas = (id, codigo, titulo, carga_horaria) => {
+
+    disciplinas_selecionadas_list.value.push({ id, codigo, titulo, carga_horaria });
 
 }
 
 const setDisciplinasGradeAntiga = (grade_antiga) => {
     const allDisciplinas = page.props.disciplinas;
 
-    disciplinas_da_grade_escolhida.value = allDisciplinas.filter(disciplina => 
+    disciplinas_da_grade_escolhida.value = allDisciplinas.filter(disciplina =>
         disciplina.grades.some(grade => grade.id === grade_antiga)
     );
 };
+
+const handleGradeAntigaChange = (grade_antiga) => {
+    setDisciplinasGradeAntiga(grade_antiga)
+
+    disciplinas_selecionadas_list.value = []
+}
+
+const deleteDisciplinaFromList = (id) => {
+    console.log(id);
+
+    disciplinas_selecionadas_list.value = disciplinas_selecionadas_list.value.filter(disciplina => disciplina.id !== id);
+}
 
 
 
@@ -87,8 +100,8 @@ const onUpload = () => {
                                     <div class="flex flex-col w-fit">
                                         <label class="mb-2" for="grade_antiga">Grade Antiga</label>
                                         <Select v-model="grade_antiga" :options="grades" optionLabel="titulo"
-                                            name="grade_antiga" placeholder="Selecione uma grade"
-                                            class="w-full md:w-56" @change="setDisciplinasGradeAntiga(grade_antiga.id)"/>
+                                            name="grade_antiga" placeholder="Selecione uma grade" class="w-full md:w-56"
+                                            @change="handleGradeAntigaChange(grade_antiga.id)" />
                                     </div>
 
                                     <div class=" hidden lg:flex justify-center items-end">
@@ -145,7 +158,7 @@ const onUpload = () => {
                                     </div>
                                     <div class="flex items-end w-fit">
                                         <Button label="" severity="primary" icon="pi pi-plus"
-                                            @click="insert_disciplinas(disciplina_insert.codigo, disciplina_insert.titulo, ch_insert)" />
+                                            @click="insert_disciplinas(disciplina_insert.id, disciplina_insert.codigo, disciplina_insert.titulo, ch_insert)" />
                                     </div>
                                 </div>
                                 <div class="flex mt-14 justify-center gap-10 mb-8">
@@ -153,7 +166,16 @@ const onUpload = () => {
                                         <Column field="codigo" header="Código"></Column>
                                         <Column field="titulo" header="Titulo"></Column>
                                         <Column field="carga_horaria" header="Carga Horária"></Column>
-                                        <Column field="actions" header="Ações"></Column>
+                                        <Column field="actions" header="Ações">
+                                            <template #body="slotProps">
+                                                <div class="flex gap-4 justify-center">
+                                                    <button @click="deleteDisciplinaFromList(slotProps.data.id)">
+                                                        <i class="hover:text-red-600 pi pi-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </template>
+                                        </Column>
+
                                     </DataTable>
                                 </div>
 
