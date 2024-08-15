@@ -19,7 +19,8 @@ class GeracaoController extends Controller
     public function geracao()
     {
         return Inertia::render('Geracao/Geracao', [
-            // 'equivalencias' => Equivalencias::with('disciplinas')->get(),
+            'disciplinas' => Disciplinas::with('grades')->get(),
+            'grades' => Grades::all()
         ]);
         
     }
