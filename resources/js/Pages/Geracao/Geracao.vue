@@ -18,11 +18,12 @@ import { ref, onMounted } from 'vue';
 import TextInput from '@/Components/TextInput.vue';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import ColumnGroup from 'primevue/columngroup';   // optional
-import Row from 'primevue/row';                   // optional
-
+import ColumnGroup from 'primevue/columngroup';
+import Row from 'primevue/row';
 
 const page = usePage();
+
+const showTable = ref(false);
 
 const grades = page.props.grades;
 
@@ -36,10 +37,22 @@ const ch_insert = ref(null);
 
 const disciplinas_selecionadas_list = ref([]);
 
-const insert_disciplinas = (id, codigo, titulo, carga_horaria) => {
+const handleInsertDisciplinas = (id, codigo, titulo, carga_horaria) => {
 
+    showTable.value = true;
+
+    const existingDisciplina = disciplinas_selecionadas_list.value.find(disciplina => disciplina.id === id);
+
+    if (existingDisciplina) {
+        toastMixin.fire({ title: "Essa disciplina ja foi inserida!", icon: "warning" });
+        return;
+    }
+
+    insertDisciplinas(id, codigo, titulo, carga_horaria);
+}
+
+const insertDisciplinas = (id, codigo, titulo, carga_horaria) => {
     disciplinas_selecionadas_list.value.push({ id, codigo, titulo, carga_horaria });
-
 }
 
 const setDisciplinasGradeAntiga = (grade_antiga) => {
@@ -51,17 +64,19 @@ const setDisciplinasGradeAntiga = (grade_antiga) => {
 };
 
 const handleGradeAntigaChange = (grade_antiga) => {
+    console.log(disciplinas_selecionadas_list.value.length);
+
     setDisciplinasGradeAntiga(grade_antiga)
 
     disciplinas_selecionadas_list.value = []
 }
 
 const deleteDisciplinaFromList = (id) => {
-    console.log(id);
-
+    if (disciplinas_selecionadas_list.value.length === 1) {
+        showTable.value = false;
+    }
     disciplinas_selecionadas_list.value = disciplinas_selecionadas_list.value.filter(disciplina => disciplina.id !== id);
 }
-
 
 
 const upload = () => {
@@ -141,7 +156,7 @@ const onUpload = () => {
                         </StepPanel> -->
                         <StepPanel class="rounded-lg p-6" v-slot="{ activateCallback }" value="2">
                             <div class="flex flex-col min-h-60">
-                                <h1 class="font-semibold text-3xl">Adicione as disciplinas cursadas</h1>
+                                <h1 class="font-semibold text-3xl">Adicione as disciplinas previamente cursadas</h1>
                                 <div class="flex mt-14 justify-center gap-10">
 
                                     <div class="flex flex-col w-fit">
@@ -158,10 +173,10 @@ const onUpload = () => {
                                     </div>
                                     <div class="flex items-end w-fit">
                                         <Button label="" severity="primary" icon="pi pi-plus"
-                                            @click="insert_disciplinas(disciplina_insert.id, disciplina_insert.codigo, disciplina_insert.titulo, ch_insert)" />
+                                            @click="handleInsertDisciplinas(disciplina_insert.id, disciplina_insert.codigo, disciplina_insert.titulo, ch_insert)" />
                                     </div>
                                 </div>
-                                <div class="flex mt-14 justify-center gap-10 mb-8">
+                                <div v-show="showTable" class="flex mt-14 justify-center gap-10 mb-8">
                                     <DataTable :value="disciplinas_selecionadas_list" tableStyle="max-width: 50rem">
                                         <Column field="codigo" header="Código"></Column>
                                         <Column field="titulo" header="Titulo"></Column>
