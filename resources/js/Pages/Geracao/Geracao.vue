@@ -156,7 +156,7 @@ const onUpload = () => {
                         </StepPanel> -->
                         <StepPanel class="rounded-lg p-6" v-slot="{ activateCallback }" value="2">
                             <div class="flex flex-col min-h-60">
-                                <h1 class="font-semibold text-3xl">Adicione as disciplinas cursadas ({{ grade_antiga.titulo }})</h1>
+                                <h1 class="font-semibold text-3xl">Adicione as disciplinas cursadas ({{ grade_antiga ? grade_antiga.titulo : `` }})</h1>
                                 <div class="flex mt-14 justify-center gap-10">
 
                                     <div class="flex flex-col w-fit">

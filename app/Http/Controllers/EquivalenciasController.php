@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\EquivalenciasRequest;
 use App\Http\Requests\GradesRequest;
-use App\Models\Disciplinas;
-use App\Models\DisciplinasEquivalencias;
-use App\Models\DisciplinasGrades;
+use App\Models\{Disciplinas, DisciplinasEquivalencias, DisciplinasGrades};
 use App\Models\Equivalencias;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -53,7 +51,7 @@ class EquivalenciasController extends Controller
             return response()->json(['success' => 'Equivalencia adicionada com sucesso!'], 201);
         } catch (Throwable $th) {
             DB::rollBack();
-            return response()->json(['error' => 'Erro ao adicionar equivalencia! '], 500);
+            return response()->json(['error' => 'Erro ao adicionar equivalencia! '.$th->getMessage()], 500);
         }
     }
 
