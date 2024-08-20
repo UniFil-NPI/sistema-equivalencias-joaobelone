@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('resultados', function (Blueprint $table) {
+        Schema::create('resultados_disciplinas', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('titulo');
-            $table->integer('grade_antiga');
-            $table->integer('grade_nova');
+            $table->foreignIdFor(\App\Models\Resultados::class);
+            $table->foreignIdFor(\App\Models\Disciplinas::class);
+            $table->string('tipo');
+            $table->integer('carga_horaria')->nullable();
+
         });
     }
 
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('resultados');
+        Schema::dropIfExists('resultados_disciplinas');
     }
 };

@@ -11,6 +11,7 @@ use App\Models\Equivalencias;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Grades;
+use App\Models\Resultados;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
@@ -43,9 +44,8 @@ class GeracaoController extends Controller
             $disciplinas_a_cursar_grade_nova = $this->getDisciplinasRestantes($grade_nova['id'], $disciplinas_abatidas_grade_nova_ids_array);
 
 
-
-
             $resultado = [
+                'titulo'=>$request->titulo,
                 'grade_antiga' => $grade_antiga,
                 'grade_nova' => $grade_nova,
                 'disciplinas_cursadas_grade_antiga' => $disciplinas_antigas,
@@ -91,7 +91,8 @@ class GeracaoController extends Controller
     }
 
     // function storeResultado($resultado){
-    //     DB::table('resultados')->insert([
+
+    //     Resultados::create([
     //         'titulo' => 'Resultado de teste',
     //         'grade_antiga' => $resultado['grade_antiga']['id'],
     //         'grade_nova' => $resultado['grade_nova']['id'],
@@ -99,5 +100,6 @@ class GeracaoController extends Controller
     //         'disciplinas_abatidas_grade_nova' => json_encode($resultado['disciplinas_abatidas_grade_nova']),
     //         'disciplinas_atribuidas_grade_nova' => json_encode($resultado['disciplinas_a_cursar_grade_nova'])
     //     ]);
+
     // }
 }

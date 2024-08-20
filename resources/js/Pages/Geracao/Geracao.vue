@@ -118,7 +118,9 @@ const upload = async () => {
         grade_nova: grade_nova.value
     }
 
-    const response = await axios.post(route('geracao.gerar-equivalencias'), { disciplinas, grades })
+    const titulo = titulo_geracao.value;
+
+    const response = await axios.post(route('geracao.gerar-equivalencias'), { disciplinas, grades, titulo })
 
     if (!response.data || response.data.error) {
         toastMixin.fire({ title: "Erro ao gerar equivalências", icon: "error" });
