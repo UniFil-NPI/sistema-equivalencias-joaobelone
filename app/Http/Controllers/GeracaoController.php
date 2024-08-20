@@ -36,7 +36,6 @@ class GeracaoController extends Controller
             $grade_nova = $request->grades['grade_nova'];
             $disciplinas_antigas = $request->disciplinas;
 
-
             $disciplinas_abatidas_grade_nova = $this->getDisciplinasAbatidas($disciplinas_antigas, $grade_nova['id']);
 
             $disciplinas_abatidas_grade_nova_ids_array = $this->makeArrayOfIds($disciplinas_abatidas_grade_nova);

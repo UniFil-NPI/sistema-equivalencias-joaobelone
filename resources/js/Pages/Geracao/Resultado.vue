@@ -20,6 +20,7 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';
 import Row from 'primevue/row';
+import { FilterMatchMode } from '@primevue/core/api';
 
 const page = usePage();
 
@@ -29,6 +30,10 @@ const disciplinas_cursadas_grade_antiga = page.props.resultado.disciplinas_cursa
 const disciplinas_abatidas_grade_nova = page.props.resultado.disciplinas_abatidas_grade_nova;
 const disciplinas_a_cursar_grade_nova = page.props.resultado.disciplinas_a_cursar_grade_nova;
 
+
+const filters = ref({
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS }
+});
 </script>
 <template>
 
@@ -40,56 +45,79 @@ const disciplinas_a_cursar_grade_nova = page.props.resultado.disciplinas_a_cursa
                     equivalências</h2>
             </div>
         </template>
-        <div class="py-12">
+        <div class="pt-12 pb-6">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="card flex justify-center mb-8">
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="rounded-xl">
-                            <DataTable :value="disciplinas_cursadas_grade_antiga" filter removableSort stripedRows
-                                paginator :rows="10" :rowsPerPageOptions="[25, 50, 100]"
-                                tableStyle="max-width: 50rem; border-radius:6%">
-                                <template #header>
-                                    <span class="text-xl font-bold">Disciplinas Cursadas ({{ grade_antiga?.titulo ??
-                                        '' }})</span>
-                                </template>
-                                <Column field="codigo" header="Código"></Column>
-                                <Column field="titulo" header="Titulo"></Column>
-                                <Column field="carga_horaria" header="Carga Horária"></Column>
-
-
-                            </DataTable>
-                        </div>
-                        <div>
-                            <DataTable :value="disciplinas_abatidas_grade_nova" filter removableSort stripedRows
-                                paginator :rows="10" :rowsPerPageOptions="[25, 50, 100]"
-                                tableStyle="max-width: 50rem; border-radius:6%">
-                                <template #header>
-                                    <span class="text-xl font-bold">Disciplinas Equivalentes Cortadas ({{
-                                        grade_nova?.titulo ?? '' }})</span>
-                                </template>
-                                <Column field="codigo" header="Código"></Column>
-                                <Column field="titulo" header="Titulo"></Column>
-                                <Column field="carga_horaria" header="Carga Horária"></Column>
-
-
-                            </DataTable>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <DataTable :value="disciplinas_a_cursar_grade_nova" tableStyle=" border-radius:6%" filter
-                        removableSort stripedRows paginator :rows="10" :rowsPerPageOptions="[25, 50, 100]">
+                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg gap-y-">
+                    <DataTable v-model:filters="filters" filter removableSort stripedRows paginator :rows="25"
+                        :rowsPerPageOptions="[25, 50, 100]" :value="disciplinas_cursadas_grade_antiga"
+                        tableStyle="min-width: 20rem"
+                        :globalFilterFields="['codigo', 'titulo', 'tipo', 'modalidade', 'carga_horaria']">
+                        <template #empty>Nenhuma disciplina encontrada.</template>
                         <template #header>
-                            <span class="text-xl font-bold">Disciplinas para cursar ({{ grade_nova?.titulo ?? ''
-                                }})</span>
+                            <div class="flex justify-between">
+                                <h2 class="text-xl font-bold">Disciplinas cursadas na grade antiga - <span class="text-primary"> {{
+                                    grade_antiga?.titulo ?? '' }}</span></h2>
+                                <InputText
+                                    class="shadow appearance-none border rounded ps-10 w-96 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600"
+                                    v-model="filters['global'].value" placeholder="Pesquisa" />
+                            </div>
                         </template>
-                        <Column field="codigo" header="Código"></Column>
-                        <Column field="titulo" header="Titulo"></Column>
-                        <Column field="carga_horaria" header="Carga Horária"></Column>
+                        <Column field="codigo" header="Codigo" sortable></Column>
+                        <Column field="titulo" header="Titulo" sortable></Column>
+                        <Column field="carga_horaria" header="Carga Horaria" sortable></Column>
                     </DataTable>
-                </div>
 
+                </div>
+            </div>
+        </div>
+        <div class="pt-6 pb-6">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg gap-y-">
+                    <DataTable v-model:filters="filters" filter removableSort stripedRows paginator :rows="25"
+                        :rowsPerPageOptions="[25, 50, 100]" :value="disciplinas_abatidas_grade_nova"
+                        tableStyle="min-width: 20rem"
+                        :globalFilterFields="['codigo', 'titulo', 'tipo', 'modalidade', 'carga_horaria']">
+                        <template #empty>Nenhuma disciplina encontrada.</template>
+                        <template #header>
+                            <div class="flex justify-between">
+                                <h2 class="text-xl font-bold">Disciplinas abatidas da grade nova - <span class="text-primary"> {{
+                                    grade_nova?.titulo ?? '' }}</span></h2>
+                                <InputText
+                                    class="shadow appearance-none border rounded ps-10 w-96 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600"
+                                    v-model="filters['global'].value" placeholder="Pesquisa" />
+                            </div>
+                        </template>
+                        <Column field="codigo" header="Codigo" sortable></Column>
+                        <Column field="titulo" header="Titulo" sortable></Column>
+                        <Column field="carga_horaria" header="Carga Horaria" sortable></Column>
+                    </DataTable>
+
+                </div>
+            </div>
+        </div>
+        <div class="pt-6 pb-6">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg gap-y-">
+                    <DataTable v-model:filters="filters" filter removableSort stripedRows paginator :rows="25"
+                        :rowsPerPageOptions="[25, 50, 100]" :value="disciplinas_a_cursar_grade_nova"
+                        tableStyle="min-width: 20rem"
+                        :globalFilterFields="['codigo', 'titulo', 'tipo', 'modalidade', 'carga_horaria']">
+                        <template #empty>Nenhuma disciplina encontrada.</template>
+                        <template #header>
+                            <div class="flex justify-between">
+                                <h2 class="text-xl font-bold">Disciplinas a cursar na grade nova - <span class="text-primary"> {{
+                                    grade_nova?.titulo ?? '' }}</span></h2>
+                                <InputText
+                                    class="shadow appearance-none border rounded ps-10 w-96 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600"
+                                    v-model="filters['global'].value" placeholder="Pesquisa" />
+                            </div>
+                        </template>
+                        <Column field="codigo" header="Codigo" sortable></Column>
+                        <Column field="titulo" header="Titulo" sortable></Column>
+                        <Column field="carga_horaria" header="Carga Horaria" sortable></Column>
+                    </DataTable>
+
+                </div>
             </div>
         </div>
     </AuthenticatedLayout>
