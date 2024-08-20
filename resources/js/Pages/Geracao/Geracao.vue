@@ -79,9 +79,24 @@ const deleteDisciplinaFromList = (id) => {
 }
 
 
-const upload = () => {
-    fileupload.value.upload();
-};
+const upload = async () => {
+    console.log(disciplinas_selecionadas_list.value);
+
+    const disciplinas = disciplinas_selecionadas_list.value;
+
+    const grades = {
+        grade_antiga: grade_antiga.value.id,
+        grade_nova: grade_nova.value.id
+    }
+
+    const response = await axios.post(route('geracao.gerar-equivalencias'), { disciplinas, grades })
+
+    console.log(await response.data);
+
+}
+
+
+
 
 const onUpload = () => {
 
@@ -104,7 +119,7 @@ const onUpload = () => {
                     <StepList>
                         <Step value="1">Etapa I</Step>
                         <Step value="2">Etapa II</Step>
-                        <Step value="3">Etapa III</Step>
+                        <!-- <Step value="3">Etapa III</Step> -->
                     </StepList>
                     <StepPanels>
                         <StepPanel class="rounded-lg p-6" v-slot="{ activateCallback }" value="1">
@@ -140,10 +155,11 @@ const onUpload = () => {
                         <!-- <StepPanel class="rounded-lg p-6" v-slot="{ activateCallback }" value="2">
                             <div class="flex flex-col max-h-60">
                                 <h1 class="font-semibold text-3xl">Faça upload do arquivo de histórico</h1>
-                                <div class="flex mt-14 items-center justify-center flex-col ">
+                                <div class="flex mt-14 items-center justify-center">
                                     <i style="font-size: 90px;" class="text-primary pi pi-file mb-8"></i>
+                                    <i style="font-size: 90px;" class="text-primary pi pi-cog mb-8"></i>
                                     <FileUpload ref="fileupload" mode="basic" name="demo[]" url="/api/upload"
-                                        accept="image/*" :maxFileSize="1000000" @upload="onUpload" />
+                                        accept="image/*" :maxFileSize="1000000" @upload="onUpload" /> 
                                 </div>
                             </div>
 
@@ -156,7 +172,8 @@ const onUpload = () => {
                         </StepPanel> -->
                         <StepPanel class="rounded-lg p-6" v-slot="{ activateCallback }" value="2">
                             <div class="flex flex-col min-h-60">
-                                <h1 class="font-semibold text-3xl">Adicione as disciplinas cursadas ({{ grade_antiga ? grade_antiga.titulo : `` }})</h1>
+                                <h1 class="font-semibold text-3xl">Adicione as disciplinas cursadas ({{ grade_antiga ?
+                                    grade_antiga.titulo : `` }})</h1>
                                 <div class="flex mt-14 justify-center gap-10">
 
                                     <div class="flex flex-col w-fit">
@@ -199,25 +216,11 @@ const onUpload = () => {
                             <div class="flex pt-6 justify-between">
                                 <Button label="Voltar" severity="secondary" icon="pi pi-arrow-left"
                                     @click="activateCallback('1')" />
-                                <Button label="Próximo" icon="pi pi-arrow-right" @click="activateCallback('3')"
-                                    iconPos="right" />
-                            </div>
-                        </StepPanel>
-
-                        <StepPanel class="rounded-lg p-6" v-slot="{ activateCallback }" value="3">
-                            <div class="flex flex-col max-h-60">
-                                <h1 class="font-semibold text-3xl">Confirme as informações</h1>
-                                <div class="flex items-center justify-center h-60 gap-4 ">
-                                    <i style="font-size: 90px;" class="text-primary pi pi-check"></i>
-                                </div>
-                            </div>
-                            <div class="pt-6 flex justify-between">
-                                <Button label="Voltar" severity="secondary" icon="pi pi-arrow-left"
-                                    @click="activateCallback('2')" />
                                 <Button class="" iconPos="right" icon="pi pi-cog" label="Gerar Equivalências"
                                     @click="upload" />
                             </div>
                         </StepPanel>
+
                     </StepPanels>
                 </Stepper>
             </div>
