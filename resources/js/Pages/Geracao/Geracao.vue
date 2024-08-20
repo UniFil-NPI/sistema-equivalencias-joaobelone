@@ -20,6 +20,7 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';
 import Row from 'primevue/row';
+import { router } from '@inertiajs/vue3'
 
 const page = usePage();
 
@@ -80,7 +81,6 @@ const deleteDisciplinaFromList = (id) => {
 
 
 const upload = async () => {
-    console.log(disciplinas_selecionadas_list.value);
 
     const disciplinas = disciplinas_selecionadas_list.value;
 
@@ -91,16 +91,18 @@ const upload = async () => {
 
     const response = await axios.post(route('geracao.gerar-equivalencias'), { disciplinas, grades })
 
-    console.log(await response.data);
-
+    if (!response.data) {
+        toastMixin.fire({ title: "Erro ao gerar equivalências", icon: "error" });
+        return;
+    }
+    const resultado = response.data
+    router.post('/geracao/resultado', { resultado })
 }
 
 
+// const onUpload = () => {
 
-
-const onUpload = () => {
-
-};
+// };
 
 </script>
 <template>

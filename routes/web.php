@@ -59,6 +59,8 @@ Route::middleware('auth')->group(function () {
     Route::prefix('geracao')->group(function () {
         Route::get('/', [GeracaoController::class, 'geracao'])->name('geracao.page');
 
+        Route::post('/resultado', [GeracaoController::class, 'resultado'])->name('geracao.resultado');
+
         Route::post('/gerar-equivalencias', [GeracaoController::class, 'gerarEquivalencias'])->name('geracao.gerar-equivalencias');
     });
 });

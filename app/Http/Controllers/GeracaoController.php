@@ -24,6 +24,11 @@ class GeracaoController extends Controller
         ]);
     }
 
+    public function resultado(Request $request)
+    {
+        return Inertia::render('Geracao/Resultado', ['resultado' => $request->resultado]);
+    }
+
     public function gerarEquivalencias(Request $request)
     {
         //@todo melhorar essa bosta
@@ -57,12 +62,15 @@ class GeracaoController extends Controller
         //disciplinas que o aluno ainda não matou da grade nova
         $disciplinas_a_cursar_grade_nova = Grades::find($grade_nova)->disciplinas()->whereNotIn('disciplinas.id', $disciplinas_matadas_grade_nova_ids)->get();
 
-        return response()->json([
-            'grade_antiga'=> Grades::find($grade_antiga),
-            'grade_nova'=> Grades::find($grade_nova),
-            'disciplinas_cursadas_grade_antiga' => $disciplinas_antigas,  
+        $resultado = [
+            'grade_antiga' => Grades::find($grade_antiga),
+            'grade_nova' => Grades::find($grade_nova),
+            'disciplinas_cursadas_grade_antiga' => $disciplinas_antigas,
             'disciplinas_matadas_grade_nova' => $disciplinas_matadas_grade_nova,
             'disciplinas_a_cursar_grade_nova' => $disciplinas_a_cursar_grade_nova
-        ]);
+        ];
+
+
+        return response()->json($resultado);
     }
 }
