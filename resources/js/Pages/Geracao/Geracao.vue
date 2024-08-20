@@ -24,6 +24,10 @@ import { router } from '@inertiajs/vue3'
 
 const page = usePage();
 
+const secondDisabled = ref(true);
+const thirdDisabled = ref(true);
+const finalDisabled = ref(true);
+
 const showTable = ref(false);
 const grades = page.props.grades;
 const grade_antiga = ref(null)
@@ -31,6 +35,7 @@ const grade_nova = ref(null)
 const disciplinas_da_grade_escolhida = ref(null);
 const disciplina_insert = ref(null);
 const ch_insert = ref(null);
+const titulo_geracao = ref(null);
 const disciplinas_selecionadas_list = ref([]);
 
 const handleInsertDisciplinas = (id, codigo, titulo, carga_horaria) => {
@@ -45,6 +50,8 @@ const handleInsertDisciplinas = (id, codigo, titulo, carga_horaria) => {
     }
 
     insertDisciplinas(id, codigo, titulo, carga_horaria);
+
+    checkThirdButtonEnabled()
 }
 
 const insertDisciplinas = (id, codigo, titulo, carga_horaria) => {
@@ -59,17 +66,44 @@ const setDisciplinasGradeAntiga = (grade_antiga) => {
     );
 };
 
-const handleGradeAntigaChange = (grade_antiga) => {
-    console.log(disciplinas_selecionadas_list.value.length);
+const checkSecondButtonEnabled = () => {
+    if (grade_antiga.value && grade_nova.value) {
+        secondDisabled.value = false;
+        return;
+    }
+    secondDisabled.value = true;
+}
 
+const checkThirdButtonEnabled = () => {
+    if (disciplinas_selecionadas_list.value.length > 0) {
+        thirdDisabled.value = false;
+        return
+    }
+    ;
+    thirdDisabled.value = true;
+}
+const checkFinalButtonEnabled = () => {
+    if (titulo_geracao.value.length > 0) {
+        finalDisabled.value = false;
+        return;
+
+    }
+    finalDisabled.value = true;
+}
+
+
+const handleGradeAntigaChange = (grade_antiga) => {
     setDisciplinasGradeAntiga(grade_antiga)
 
     disciplinas_selecionadas_list.value = []
+
+    checkSecondButtonEnabled()
 }
 
 const deleteDisciplinaFromList = (id) => {
     if (disciplinas_selecionadas_list.value.length === 1) {
         showTable.value = false;
+        thirdDisabled.value = true;
     }
     disciplinas_selecionadas_list.value = disciplinas_selecionadas_list.value.filter(disciplina => disciplina.id !== id);
 }
@@ -86,9 +120,8 @@ const upload = async () => {
 
     const response = await axios.post(route('geracao.gerar-equivalencias'), { disciplinas, grades })
 
-    if (!response.data || response.data.error ) {
+    if (!response.data || response.data.error) {
         toastMixin.fire({ title: "Erro ao gerar equivalências", icon: "error" });
-        console.log(response.data);
         return;
     }
     const resultado = response.data
@@ -112,7 +145,7 @@ const upload = async () => {
                     <StepList>
                         <Step value="1">Etapa I</Step>
                         <Step value="2">Etapa II</Step>
-                        <!-- <Step value="3">Etapa III</Step> -->
+                        <Step value="3">Etapa III</Step>
                     </StepList>
                     <StepPanels>
                         <StepPanel class="rounded-lg p-6" v-slot="{ activateCallback }" value="1">
@@ -134,15 +167,15 @@ const upload = async () => {
                                     <div class="flex flex-col w-fit">
                                         <label class="mb-2" for="grade_nova">Grade Nova</label>
                                         <Select v-model="grade_nova" :options="grades" optionLabel="titulo"
-                                            name="grade_nova" placeholder="Selecione uma grade"
-                                            class="w-full md:w-56" />
+                                            name="grade_nova" placeholder="Selecione uma grade" class="w-full md:w-56"
+                                            @change="checkSecondButtonEnabled" />
                                     </div>
 
                                 </div>
                             </div>
                             <div class="flex pt-6 justify-end">
                                 <Button label="Próximo" icon="pi pi-arrow-right" @click="activateCallback('2')"
-                                    iconPos="right" />
+                                    iconPos="right" :disabled="secondDisabled" />
                             </div>
                         </StepPanel>
                         <!-- <StepPanel class="rounded-lg p-6" v-slot="{ activateCallback }" value="2">
@@ -203,14 +236,35 @@ const upload = async () => {
 
                                     </DataTable>
                                 </div>
-
                             </div>
 
                             <div class="flex pt-6 justify-between">
                                 <Button label="Voltar" severity="secondary" icon="pi pi-arrow-left"
                                     @click="activateCallback('1')" />
+                                <Button label="Próximo" icon="pi pi-arrow-right" @click="activateCallback('3')"
+                                    iconPos="right" :disabled="thirdDisabled" />
+
+                            </div>
+                        </StepPanel>
+                        <StepPanel class="rounded-lg p-6" v-slot="{ activateCallback }" value="3">
+                            <div class="flex flex-col min-h-60">
+                                <h1 class="font-semibold text-3xl">Insira um título para esta geração</h1>
+                                <div class="flex mt-14 justify-center gap-10">
+
+                                    <div class="flex flex-col w-6/12">
+                                        <label class="mb-2" for="ch_insert">Título</label>
+                                        <InputText placeholder="Exemplo: nome do aluno" type="text"
+                                            name="titulo_geracao" id="titulo_geracao" v-model="titulo_geracao"
+                                            @change="checkFinalButtonEnabled" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex pt-6 justify-between">
+                                <Button label="Voltar" severity="secondary" icon="pi pi-arrow-left"
+                                    @click="activateCallback('2')" />
+
                                 <Button class="" iconPos="right" icon="pi pi-cog" label="Gerar Equivalências"
-                                    @click="upload" />
+                                    @click="upload" :disabled="finalDisabled" />
                             </div>
                         </StepPanel>
 
