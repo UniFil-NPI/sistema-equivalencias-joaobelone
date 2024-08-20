@@ -42,6 +42,9 @@ class GeracaoController extends Controller
 
             $disciplinas_a_cursar_grade_nova = $this->getDisciplinasRestantes($grade_nova['id'], $disciplinas_abatidas_grade_nova_ids_array);
 
+
+
+
             $resultado = [
                 'grade_antiga' => $grade_antiga,
                 'grade_nova' => $grade_nova,
@@ -49,6 +52,8 @@ class GeracaoController extends Controller
                 'disciplinas_abatidas_grade_nova' => $disciplinas_abatidas_grade_nova,
                 'disciplinas_a_cursar_grade_nova' => $disciplinas_a_cursar_grade_nova
             ];
+
+            // $this->storeResultado($resultado);
 
             return response()->json($resultado);
         } catch (Throwable $e) {
@@ -84,4 +89,15 @@ class GeracaoController extends Controller
             return $obj->id;
         }, $object_array);
     }
+
+    // function storeResultado($resultado){
+    //     DB::table('resultados')->insert([
+    //         'titulo' => 'Resultado de teste',
+    //         'grade_antiga' => $resultado['grade_antiga']['id'],
+    //         'grade_nova' => $resultado['grade_nova']['id'],
+    //         'disciplinas_cursadas_grade_antiga' => json_encode($resultado['disciplinas_cursadas_grade_antiga']),
+    //         'disciplinas_abatidas_grade_nova' => json_encode($resultado['disciplinas_abatidas_grade_nova']),
+    //         'disciplinas_atribuidas_grade_nova' => json_encode($resultado['disciplinas_a_cursar_grade_nova'])
+    //     ]);
+    // }
 }
