@@ -25,17 +25,12 @@ import { router } from '@inertiajs/vue3'
 const page = usePage();
 
 const showTable = ref(false);
-
 const grades = page.props.grades;
-
 const grade_antiga = ref(null)
 const grade_nova = ref(null)
-const fileupload = ref();
 const disciplinas_da_grade_escolhida = ref(null);
-
 const disciplina_insert = ref(null);
 const ch_insert = ref(null);
-
 const disciplinas_selecionadas_list = ref([]);
 
 const handleInsertDisciplinas = (id, codigo, titulo, carga_horaria) => {
@@ -85,24 +80,20 @@ const upload = async () => {
     const disciplinas = disciplinas_selecionadas_list.value;
 
     const grades = {
-        grade_antiga: grade_antiga.value.id,
-        grade_nova: grade_nova.value.id
+        grade_antiga: grade_antiga.value,
+        grade_nova: grade_nova.value
     }
 
     const response = await axios.post(route('geracao.gerar-equivalencias'), { disciplinas, grades })
 
-    if (!response.data) {
+    if (!response.data || response.data.error ) {
         toastMixin.fire({ title: "Erro ao gerar equivalências", icon: "error" });
+        console.log(response.data);
         return;
     }
     const resultado = response.data
     router.post('/geracao/resultado', { resultado })
 }
-
-
-// const onUpload = () => {
-
-// };
 
 </script>
 <template>

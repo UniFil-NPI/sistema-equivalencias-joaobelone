@@ -26,7 +26,7 @@ const page = usePage();
 const grade_antiga = page.props.resultado.grade_antiga;
 const grade_nova = page.props.resultado.grade_nova;
 const disciplinas_cursadas_grade_antiga = page.props.resultado.disciplinas_cursadas_grade_antiga;
-const disciplinas_matadas_grade_nova = page.props.resultado.disciplinas_matadas_grade_nova;
+const disciplinas_abatidas_grade_nova = page.props.resultado.disciplinas_abatidas_grade_nova;
 const disciplinas_a_cursar_grade_nova = page.props.resultado.disciplinas_a_cursar_grade_nova;
 
 </script>
@@ -60,7 +60,7 @@ const disciplinas_a_cursar_grade_nova = page.props.resultado.disciplinas_a_cursa
                             </DataTable>
                         </div>
                         <div>
-                            <DataTable :value="disciplinas_matadas_grade_nova" filter removableSort stripedRows
+                            <DataTable :value="disciplinas_abatidas_grade_nova" filter removableSort stripedRows
                                 paginator :rows="10" :rowsPerPageOptions="[25, 50, 100]"
                                 tableStyle="max-width: 50rem; border-radius:6%">
                                 <template #header>
