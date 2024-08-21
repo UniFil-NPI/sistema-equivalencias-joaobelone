@@ -19,16 +19,31 @@ class Resultados extends Model
         'grade_nova'
     ];
 
-    public function disciplinas($tipo){
-        return $this->hasMany(Disciplinas::class, 'resultados_disciplinas')->where('resultados_disciplinas.tipo', $tipo);
+    public function disciplinasCursadas()
+    {
+        return $this->belongsToMany(Disciplinas::class, 'resultados_disciplinas', 'resultados_id', 'disciplinas_id')
+            ->wherePivot('tipo', 'cursada');
     }
 
-    public function gradeAntiga(){
-        return $this->hasOne(Grades::class, 'grade_antiga');
+    public function disciplinasAbatidas()
+    {
+        return $this->belongsToMany(Disciplinas::class, 'resultados_disciplinas', 'resultados_id', 'disciplinas_id')
+            ->wherePivot('tipo', 'abatida');
     }
 
-    public function gradeNova(){
-        return $this->hasOne(Grades::class, 'grade_nova');
+    public function disciplinasAtribuidas()
+    {
+        return $this->belongsToMany(Disciplinas::class, 'resultados_disciplinas', 'resultados_id', 'disciplinas_id')
+            ->wherePivot('tipo', 'atribuida');
     }
-    
+
+    public function gradeAntiga()
+    {
+        return $this->belongsTo(Grades::class, 'grade_antiga');
+    }
+
+    public function gradeNova()
+    {
+        return $this->belongsTo(Grades::class, 'grade_nova');
+    }
 }

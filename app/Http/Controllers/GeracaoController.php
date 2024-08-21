@@ -25,11 +25,6 @@ class GeracaoController extends Controller
         ]);
     }
 
-    public function resultado(Request $request)
-    {
-        return Inertia::render('Geracao/Resultado', ['resultado' => $request->resultado]);
-    }
-
     public function gerarEquivalencias(Request $request)
     {
         try {
@@ -43,7 +38,6 @@ class GeracaoController extends Controller
 
             $disciplinas_a_cursar_grade_nova = $this->getDisciplinasRestantes($grade_nova['id'], $disciplinas_abatidas_grade_nova_ids_array);
 
-
             $resultado = [
                 'titulo'=>$request->titulo,
                 'grade_antiga' => $grade_antiga,
@@ -53,9 +47,13 @@ class GeracaoController extends Controller
                 'disciplinas_a_cursar_grade_nova' => $disciplinas_a_cursar_grade_nova
             ];
 
-            // $this->storeResultado($resultado);
+            $rc = new ResultadosController();
+            $resultado_criado = $rc->store($resultado);
+            if($resultado_criado == 'error'){
+                return response()->json(['error' =>'Não foi possível salvar o resultado: ']);
+            }
 
-            return response()->json($resultado);
+            return response()->json($resultado_criado);
         } catch (Throwable $e) {
             return response()->json(['error' =>'Não foi possível gerar as equivalências: '. $e->getMessage()]);
         }
@@ -90,16 +88,5 @@ class GeracaoController extends Controller
         }, $object_array);
     }
 
-    // function storeResultado($resultado){
 
-    //     Resultados::create([
-    //         'titulo' => 'Resultado de teste',
-    //         'grade_antiga' => $resultado['grade_antiga']['id'],
-    //         'grade_nova' => $resultado['grade_nova']['id'],
-    //         'disciplinas_cursadas_grade_antiga' => json_encode($resultado['disciplinas_cursadas_grade_antiga']),
-    //         'disciplinas_abatidas_grade_nova' => json_encode($resultado['disciplinas_abatidas_grade_nova']),
-    //         'disciplinas_atribuidas_grade_nova' => json_encode($resultado['disciplinas_a_cursar_grade_nova'])
-    //     ]);
-
-    // }
 }

@@ -126,8 +126,11 @@ const upload = async () => {
         toastMixin.fire({ title: "Erro ao gerar equivalências", icon: "error" });
         return;
     }
-    const resultado = response.data
-    router.post('/geracao/resultado', { resultado })
+    const resultado = response.data.id
+    console.log(resultado);
+    
+    
+    router.get('/geracao/resultado/'+resultado,)
 }
 
 </script>

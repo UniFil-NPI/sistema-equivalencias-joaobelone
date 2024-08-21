@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\{DisciplinasController, GradesController, EquivalenciasController, GeracaoController};
+use App\Http\Controllers\{DisciplinasController, GradesController, EquivalenciasController, GeracaoController, ResultadosController};
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -59,10 +59,12 @@ Route::middleware('auth')->group(function () {
     Route::prefix('geracao')->group(function () {
         Route::get('/', [GeracaoController::class, 'geracao'])->name('geracao.page');
 
-        Route::post('/resultado', [GeracaoController::class, 'resultado'])->name('geracao.resultado');
+        Route::get('/resultado/{id}', [ResultadosController::class, 'resultado'])->name('geracao.resultado');
 
         Route::post('/gerar-equivalencias', [GeracaoController::class, 'gerarEquivalencias'])->name('geracao.gerar-equivalencias');
     });
+
+    
 });
 
 require __DIR__ . '/auth.php';

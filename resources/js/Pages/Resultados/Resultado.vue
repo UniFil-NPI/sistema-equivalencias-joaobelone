@@ -24,11 +24,15 @@ import { FilterMatchMode } from '@primevue/core/api';
 
 const page = usePage();
 
+onMounted(() => {    
+    console.log(page.props.resultado);
+});
+
 const grade_antiga = page.props.resultado.grade_antiga;
 const grade_nova = page.props.resultado.grade_nova;
-const disciplinas_cursadas_grade_antiga = page.props.resultado.disciplinas_cursadas_grade_antiga;
-const disciplinas_abatidas_grade_nova = page.props.resultado.disciplinas_abatidas_grade_nova;
-const disciplinas_a_cursar_grade_nova = page.props.resultado.disciplinas_a_cursar_grade_nova;
+const disciplinas_cursadas_grade_antiga = page.props.resultado.disciplinas_cursadas;
+const disciplinas_abatidas_grade_nova = page.props.resultado.disciplinas_abatidas;
+const disciplinas_a_cursar_grade_nova = page.props.resultado.disciplinas_atribuidas;
 
 
 const filters = ref({
@@ -42,7 +46,7 @@ const filters = ref({
         <template #header>
             <div class="flex justify-between">
                 <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Resultado da geração de
-                    equivalências</h2>
+                    equivalências - <span class="text-primary"> {{ $page.props.resultado.titulo }}</span></h2>
             </div>
         </template>
         <div class="pt-12 pb-6">
