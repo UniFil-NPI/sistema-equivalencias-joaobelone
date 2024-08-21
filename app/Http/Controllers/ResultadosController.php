@@ -15,7 +15,7 @@ class ResultadosController extends Controller
 
     public function index()
     {
-        $resultados = Resultados::with(['gradeAntiga', 'gradeNova'])->get();
+        $resultados = Resultados::with(['gradeAntiga', 'gradeNova'])->orderBy('created_at','desc')->get();
 
         return Inertia::render('Resultados/Index', ['resultados' => $resultados]);
     }
