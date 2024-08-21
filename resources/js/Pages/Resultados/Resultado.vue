@@ -47,6 +47,8 @@ const filters = ref({
             <div class="flex justify-between">
                 <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Resultado da geração de
                     equivalências - <span class="text-primary"> {{ $page.props.resultado.titulo }}</span></h2>
+                    <a href="#"
+                    class="bg-primary hover:bg-amber-800 text-white font-bold py-2 px-4 rounded-full"><i class="pi pi-download"></i> Baixar PDF</a>
             </div>
         </template>
         <div class="pt-12 pb-6">
@@ -68,7 +70,7 @@ const filters = ref({
                         </template>
                         <Column field="codigo" header="Codigo" sortable></Column>
                         <Column field="titulo" header="Titulo" sortable></Column>
-                        <Column field="carga_horaria" header="Carga Horaria" sortable></Column>
+                        <Column field="pivot.carga_horaria" header="Carga Horaria" sortable></Column>
                     </DataTable>
 
                 </div>

@@ -22,7 +22,9 @@ class Resultados extends Model
     public function disciplinasCursadas()
     {
         return $this->belongsToMany(Disciplinas::class, 'resultados_disciplinas', 'resultados_id', 'disciplinas_id')
-            ->wherePivot('tipo', 'cursada');
+            ->wherePivot('tipo', 'cursada')
+            ->withPivot('carga_horaria');
+            
     }
 
     public function disciplinasAbatidas()

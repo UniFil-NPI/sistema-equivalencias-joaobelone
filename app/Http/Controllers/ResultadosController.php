@@ -13,7 +13,14 @@ use Throwable;
 class ResultadosController extends Controller
 {
 
-    public function resultado($id)
+    public function index()
+    {
+        $resultados = Resultados::with(['gradeAntiga', 'gradeNova'])->get();
+
+        return Inertia::render('Resultados/Index', ['resultados' => $resultados]);
+    }
+
+    public function show($id)
     {
         $resultado = Resultados::with(['disciplinasCursadas', 'disciplinasAbatidas', 'disciplinasAtribuidas', 'gradeAntiga', 'gradeNova'])->find($id);
 
@@ -34,7 +41,7 @@ class ResultadosController extends Controller
 
             foreach ($resultado_request['disciplinas_cursadas_grade_antiga'] as $disciplina_antiga) {
                 //this one comes as array instead of object, due to altered carga_horaria
-                $rd = ResultadosDisciplinas::create([
+                ResultadosDisciplinas::create([
                     'resultados_id' => $resultado_criado->id,
                     'disciplinas_id' => (int)$disciplina_antiga['id'],
                     'tipo' => 'cursada',

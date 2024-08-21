@@ -34,6 +34,10 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink :href="route('geracao.page')" :active="route().current('geracao.page')">
                                     Geração de Equivalências
                                 </NavLink>
+                                
+                                <NavLink :href="route('geracao.historico')" :active="route().current('geracao.historico')">
+                                    Histórico
+                                </NavLink>
 
                                 <NavLink :href="route('disciplinas.index')"
                                     :active="route().current('disciplinas.index')">
@@ -113,6 +117,10 @@ const showingNavigationDropdown = ref(false);
 
                         <ResponsiveNavLink :href="route('geracao.page')" :active="route().current('geracao.page')">
                             Geração de Equivalências
+                        </ResponsiveNavLink>
+
+                        <ResponsiveNavLink :href="route('geracao.historico')" :active="route().current('geracao.historico')">
+                                    Histórico
                         </ResponsiveNavLink>
 
                         <ResponsiveNavLink :href="route('disciplinas.index')"
