@@ -63,6 +63,8 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/resultado/{id}', [ResultadosController::class, 'show'])->name('geracao.resultado');
 
+        Route::get('/pdf/{id}', [ResultadosController::class, 'createPdf'])->name('geracao.pdf');
+
         Route::post('/gerar-equivalencias', [GeracaoController::class, 'gerarEquivalencias'])->name('geracao.gerar-equivalencias');
     });
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Spatie\LaravelPdf\Facades\Pdf;
+
 use App\Models\Resultados;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -15,7 +17,7 @@ class ResultadosController extends Controller
 
     public function index()
     {
-        $resultados = Resultados::with(['gradeAntiga', 'gradeNova'])->orderBy('created_at','desc')->get();
+        $resultados = Resultados::with(['gradeAntiga', 'gradeNova'])->orderBy('created_at', 'desc')->get();
 
         return Inertia::render('Resultados/Index', ['resultados' => $resultados]);
     }
@@ -48,7 +50,7 @@ class ResultadosController extends Controller
                     'carga_horaria' => (int)$disciplina_antiga['carga_horaria'] ?? 0
                 ]);
             }
-            
+
 
             if ($resultado_request['disciplinas_abatidas_grade_nova']) {
                 foreach ($resultado_request['disciplinas_abatidas_grade_nova'] as $disciplina_abatida) {
@@ -78,5 +80,15 @@ class ResultadosController extends Controller
             DB::rollBack();
             return 'error';
         }
+    }
+
+    public function createPdf($resultado_id)
+    {
+        $resultado = Resultados::with(['disciplinasCursadas', 'disciplinasAbatidas', 'disciplinasAtribuidas', 'gradeAntiga', 'gradeNova'])->find($resultado_id);
+
+        $path = storage_path('app/public/' . $resultado->titulo . '.pdf');
+
+        Pdf::view('resultado_pdf', ['resultado' => $resultado])->save($path);
+
     }
 }
