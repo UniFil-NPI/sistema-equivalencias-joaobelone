@@ -2,24 +2,12 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { usePage } from '@inertiajs/vue3';
-import Button from 'primevue/button';
-import Select from 'primevue/select';
-import Stepper from 'primevue/stepper';
-import StepList from 'primevue/steplist';
-import StepPanels from 'primevue/steppanels';
-import Step from 'primevue/step';
-import StepPanel from 'primevue/steppanel';
-import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
 import InputText from 'primevue/inputtext';
-import axios, { all } from 'axios';
-import { toastMixin } from '@/utils/toast';
+import axios from 'axios';
 import { ref, onMounted } from 'vue';
-import TextInput from '@/Components/TextInput.vue';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import ColumnGroup from 'primevue/columngroup';
-import Row from 'primevue/row';
 import { FilterMatchMode } from '@primevue/core/api';
 
 const page = usePage();
@@ -38,6 +26,25 @@ const disciplinas_a_cursar_grade_nova = page.props.resultado.disciplinas_atribui
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS }
 });
+
+const downloadPdf = async (id) => {
+    try {
+        const response = await axios.get(route('geracao.pdf',id), {
+            responseType: 'blob', // Important for handling binary data
+        });
+
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `${page.props.resultado.titulo}.pdf`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } catch (error) {
+        console.error('Error downloading the PDF:', error);
+    }
+};
+
 </script>
 <template>
 
@@ -47,8 +54,8 @@ const filters = ref({
             <div class="flex justify-between">
                 <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Resultado da geração de
                     equivalências - <span class="text-primary"> {{ $page.props.resultado.titulo }}</span></h2>
-                    <a href="#"
-                    class="bg-primary hover:bg-amber-800 text-white font-bold py-2 px-4 rounded-full"><i class="pi pi-download"></i> Baixar PDF</a>
+                    <button id="download_pdf" @click="downloadPdf($page.props.resultado.id)"
+                    class="bg-primary hover:bg-amber-800 text-white font-bold py-2 px-4 rounded-full"><i class="pi pi-download"></i> Baixar PDF</button>
             </div>
         </template>
         <div class="pt-12 pb-6">

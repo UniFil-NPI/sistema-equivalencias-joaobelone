@@ -1,7 +1,7 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <div class="p-20">
     <div class="container mx-auto pt-12 pb-6">
-        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+        <div class="bg-white overflow-hidden">
             <div class="flex justify-between">
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                     Resultado da geração de equivalências -

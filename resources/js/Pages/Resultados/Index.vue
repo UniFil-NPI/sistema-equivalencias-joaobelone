@@ -4,22 +4,35 @@ import { Head } from '@inertiajs/vue3';
 import InputText from 'primevue/inputtext';
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
-import { onMounted, ref } from 'vue';
-import { usePage } from '@inertiajs/vue3';
+import {ref } from 'vue';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
 import axios from 'axios';
-import { toastMixin } from '@/utils/toast';
 import { FilterMatchMode } from '@primevue/core/api';
-import ToggleSwitch from 'primevue/toggleswitch';
-
-const page = usePage();
 
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS }
 });
+
+const downloadPdf = async (titulo, id) => {
+    try {
+        const response = await axios.get(route('geracao.pdf',id), {
+            responseType: 'blob', // Important for handling binary data
+        });
+
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `${titulo}.pdf`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } catch (error) {
+        console.error('Error downloading the PDF:', error);
+    }
+};
+
 </script>
 <template>
 
@@ -65,8 +78,8 @@ const filters = ref({
                                 <div class="gap-4 flex">
                                 <a class="transition ease-in-out hover:text-blue-500  flex justify-center items-center rounded-full"
                                     :href="route('geracao.resultado', slotProps.data.id)"><i class="pi pi-eye"></i></a>
-                                    <a class="transition ease-in-out hover:text-green-400  flex justify-center items-center rounded-full"
-                                    href="#"><i class="pi pi-download"></i></a>
+                                    <button class="transition ease-in-out hover:text-green-400  flex justify-center items-center rounded-full"
+                                    @click="downloadPdf(slotProps.data.titulo, slotProps.data.id)"><i class="pi pi-download"></i></button>
                                 </div>
                             </template>
                         </Column>

@@ -90,5 +90,6 @@ class ResultadosController extends Controller
 
         Pdf::view('resultado_pdf', ['resultado' => $resultado])->save($path);
 
+        return response()->download($path);
     }
 }
