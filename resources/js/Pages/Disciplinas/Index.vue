@@ -1,11 +1,11 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
 import InputText from 'primevue/inputtext';
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
 import { onMounted, ref } from 'vue';
-import { usePage } from '@inertiajs/vue3';
+import { usePage, Link } from '@inertiajs/vue3';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Swal from 'sweetalert2/dist/sweetalert2.js'
@@ -24,7 +24,7 @@ const changeDisciplinaStatus = async (id) => {
         const response = await axios.post(route('disciplinas.change-status', id));
         toastMixin.fire({
             title: response.data.success || response.data.error,
-        }).then(() => { location.reload(); });
+        });
     } catch (error) {
         Swal.fire("Erro ao alterar status da disciplina", "", "error");
     }
@@ -45,7 +45,11 @@ const confirmDelete = async (id) => {
             const response = await axios.delete(route('disciplinas.destroy', id));
             toastMixin.fire({
                 title: response.data.success || response.data.error,
-            }).then(() => { location.reload(); });
+            }).then(() => {
+                router.visit(route('disciplinas.index'), {
+                    only: ['disciplinas'],
+                })
+            });
         } catch (error) {
             Swal.fire("Erro ao excluir disciplina", "", "error");
         }
@@ -66,9 +70,9 @@ const filters = ref({
         <template #header>
             <div class="flex justify-between">
                 <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Disciplinas</h2>
-                <a :href="route('disciplinas.create')"
+                <Link :href="route('disciplinas.create')"
                     class="bg-primary hover:bg-amber-800 text-white font-bold py-2 px-4 rounded-full">+ Criar
-                    Disciplina</a>
+                Disciplina</Link>
             </div>
         </template>
         <div class="py-12">
@@ -113,8 +117,8 @@ const filters = ref({
                                         <ToggleSwitch :modelValue="(slotProps.data.ativo == 1 ? true : false)"
                                             @update:modelValue="value => slotProps.data.ativo = value"
                                             @change="changeDisciplinaStatus(slotProps.data.id)" />
-                                        <a :href="route('disciplinas.edit', slotProps.data.id)"><i
-                                                class="hover:text-amber-500 pi pi-pen-to-square"></i></a>
+                                        <Link :href="route('disciplinas.edit', slotProps.data.id)"><i
+                                            class="hover:text-amber-500 pi pi-pen-to-square"></i></Link>
                                         <button @click="confirmDelete(slotProps.data.id)"><i
                                                 class="hover:text-red-600 pi pi-trash"></i></button>
                                     </div>

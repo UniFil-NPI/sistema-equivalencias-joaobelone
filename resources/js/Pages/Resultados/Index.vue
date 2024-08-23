@@ -1,10 +1,10 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 import InputText from 'primevue/inputtext';
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
-import {ref } from 'vue';
+import { ref } from 'vue';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import 'sweetalert2/src/sweetalert2.scss'
@@ -17,7 +17,7 @@ const filters = ref({
 
 const downloadPdf = async (titulo, id) => {
     try {
-        const response = await axios.get(route('geracao.pdf',id), {
+        const response = await axios.get(route('geracao.pdf', id), {
             responseType: 'blob', // Important for handling binary data
         });
 
@@ -41,7 +41,8 @@ const downloadPdf = async (titulo, id) => {
     <AuthenticatedLayout>
         <template #header>
             <div class="flex justify-between">
-                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Histórico de gerações</h2>
+                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Histórico de gerações
+                </h2>
             </div>
         </template>
         <div class="py-12">
@@ -76,10 +77,14 @@ const downloadPdf = async (titulo, id) => {
                         <Column field="id" header="Ações">
                             <template #body="slotProps">
                                 <div class="gap-4 flex">
-                                <a class="transition ease-in-out hover:text-blue-500  flex justify-center items-center rounded-full"
-                                    :href="route('geracao.resultado', slotProps.data.id)"><i class="pi pi-eye"></i></a>
-                                    <button class="transition ease-in-out hover:text-green-400  flex justify-center items-center rounded-full"
-                                    @click="downloadPdf(slotProps.data.titulo, slotProps.data.id)"><i class="pi pi-download"></i></button>
+                                    <Link
+                                        class="transition ease-in-out hover:text-blue-500  flex justify-center items-center rounded-full"
+                                        :href="route('geracao.resultado', slotProps.data.id)"><i class="pi pi-eye"></i>
+                                    </Link>
+                                    <button
+                                        class="transition ease-in-out hover:text-green-400  flex justify-center items-center rounded-full"
+                                        @click="downloadPdf(slotProps.data.titulo, slotProps.data.id)"><i
+                                            class="pi pi-download"></i></button>
                                 </div>
                             </template>
                         </Column>
