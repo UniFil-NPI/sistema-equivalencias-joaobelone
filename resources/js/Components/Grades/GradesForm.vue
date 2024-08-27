@@ -14,7 +14,8 @@ export default {
             value_disciplinas: this.grade ? this.grade.disciplinas : null,
             grade: this.grade,
             titulo: this.grade ? this.grade.titulo : '',
-            edit: this.edit
+            edit: this.edit,
+            soma_ch:0
         }
     },
     methods: {
@@ -60,6 +61,9 @@ export default {
                 .catch(error => {
                     console.error(error);
                 });
+        },
+        handleCHDisplay() {            
+            this.soma_ch = this.value_disciplinas.reduce((acc, item) => acc + item.carga_horaria, 0)
         }
     }
 }
@@ -84,7 +88,7 @@ export default {
 
                             <MultiSelect v-model="value_disciplinas" :options="$page.props.disciplinas" filter
                                 scrollHeight="25rem" dataKey="id" :virtualScrollerOptions="{ itemSize: 44 }"
-                                optionLabel="titulo" display="chip" placeholder="Adicionar disciplinas" class="w-full">
+                                optionLabel="titulo" display="chip" placeholder="Adicionar disciplinas" class="w-full" @change="handleCHDisplay">
                                 <template #option="props">
                                     <div class="flex items-center">
                                         <span class="option__title">{{ props.option.codigo }}</span> &nbsp - &nbsp <span
@@ -93,7 +97,7 @@ export default {
                                 </template>
                             </MultiSelect>
                         </div>
-
+                        <span v-show="soma_ch>0">Carga Horária Total: <span class="text-primary">{{ soma_ch }} h</span></span>  
                     </div>
                     <div class="flex justify-end mt-6">
                         <button type="submit"
