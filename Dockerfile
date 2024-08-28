@@ -52,7 +52,8 @@ COPY --chown=www-data:www-data . /var/www
 EXPOSE 9000
 CMD ["php-fpm"]
 
-RUN chmod 777 -R storage
+RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+RUN chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
 # RUN php artisan key:generate
 
