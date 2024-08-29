@@ -6,4 +6,4 @@ Não esquecer de rodar para habilitar a geração de pdfs : ``` php artisan stor
 
 Semear banco de dados ``` php artisan db:seed ```
 
-Caso algum erro relacionado a storage logs ``` sudo chmod 777 -R storage ```
+Caso algum erro relacionado a storage logs ``` sudo chmod 775 -R storage ```
