@@ -34,7 +34,7 @@ class Disciplinas extends Model
 
         $disciplinas_equivalencias = DisciplinasEquivalencias::where('equivalencias_id', $equivalencias_id)->get();
 
-        $disciplinas = Disciplinas::whereIn('id', $disciplinas_equivalencias->pluck('disciplinas_id'))->get();
+        $disciplinas = Disciplinas::where('ativo',1)->whereIn('id', $disciplinas_equivalencias->pluck('disciplinas_id'))->get();
 
         if($grade_id){
             $disciplinas = $disciplinas->filter(function($disciplina) use ($grade_id){
