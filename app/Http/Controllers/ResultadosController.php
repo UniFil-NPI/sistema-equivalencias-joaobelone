@@ -101,43 +101,4 @@ class ResultadosController extends Controller
 
         return response()->download($path);
     }
-
-
-    // public function createPdf($resultado_id)
-    // {
-    //     // Retrieve the data
-    //     $resultado = Resultados::with([
-    //         'disciplinasCursadas',
-    //         'disciplinasAbatidas',
-    //         'disciplinasAtribuidas',
-    //         'gradeAntiga',
-    //         'gradeNova'
-    //     ])->find($resultado_id);
-
-    //     // Render the Blade view to HTML
-    //     $html = view('resultado_pdf', ['resultado' => $resultado])->render();
-
-    //     // Define the path where the PDF will be saved
-    //     $path = storage_path('app/public/' . $resultado->titulo . '.pdf');
-
-    //     // Create the PDF using Chromium with Browsershot
-    //     Browsershot::html($html)
-    //         ->setNodeBinary('/usr/bin/node') // Path to Node.js
-    //         ->setNpmBinary('/usr/bin/npm') // Path to NPM
-    //         ->setChromePath('/usr/bin/chromium') // Path to Chromium
-    //         ->setOption('userDataDir', '/tmp/chrome')
-    //         ->addChromiumArguments([
-    //             '--disable-breakpad',
-    //             '--no-sandbox',
-    //             '--disable-gpu',
-    //             '--disable-software-rasterizer',
-    //             '--disable-dev-shm-usage',
-    //             '--no-crashpad',
-    //             '--headless'
-    //         ])
-    //         ->savePdf($path);
-
-    //     // Return the generated PDF as a downloadable file
-    //     return response()->download($path);
-    // }
 }
