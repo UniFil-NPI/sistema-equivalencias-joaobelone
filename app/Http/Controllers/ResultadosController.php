@@ -90,6 +90,15 @@ class ResultadosController extends Controller
 
         Pdf::view('resultado_pdf', ['resultado' => $resultado])->save($path);
 
+        //CASO O PDF NÃO GERE, TENTAR USAR BLOCO ABAIXO
+        // Pdf::withBrowsershot(function ($browsershot) {
+        //     $browsershot
+        //       ->setIncludePath('$PATH:'.config('browsershot.include_path'))
+        //       ->addChromiumArguments([
+        //         'headless=shell'
+        //       ]);
+        //   })->view('resultado_pdf', ['resultado' => $resultado])->save($path);
+
         return response()->download($path);
     }
 
